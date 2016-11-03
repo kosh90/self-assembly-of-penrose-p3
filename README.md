@@ -3,4 +3,6 @@ Self-assembly of p3 Penrose tilling according to Socolar
 
 using paperjs 
 
-apple-banana 
+apple-banana
+
+yabloko-moloko 
