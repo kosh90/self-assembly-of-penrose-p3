@@ -70,7 +70,7 @@ function Test_Fat_Tile(x, y, rot) {
         this.edge[i].position += [x, y];
         this.edge[i].rotate(45, [x, y]);
     }
-		// this.edge[2].rotate(45, [x, y]);
+    // this.edge[2].rotate(45, [x, y]);
 
     // function onFrame(event) {
     //     // Each frame, rotate the path 3 degrees around the point
@@ -157,12 +157,12 @@ test_tile[0] = new Test_Fat_Tile(400, 400);
 // }
 
 function onFrame(event) {
-		// Each frame, rotate the path 3 degrees around the point
-		// we defined earlier:
-		test_tile[0].edge[0].rotate(2, [400, 400]);
-		test_tile[0].edge[1].rotate(2, [400, 400]);
-		test_tile[0].edge[2].rotate(2, [400, 400]);
-		test_tile[0].edge[3].rotate(2, [400, 400]);
+    // Each frame, rotate the path 3 degrees around the point
+    // we defined earlier:
+    test_tile[0].edge[0].rotate(2, [400, 400]);
+    test_tile[0].edge[1].rotate(2, [400, 400]);
+    test_tile[0].edge[2].rotate(2, [400, 400]);
+    test_tile[0].edge[3].rotate(2, [400, 400]);
 }
 
 var tile = [];
@@ -247,10 +247,10 @@ tool.onKeyDown = function(event) {
 // ######################################################################
 
 for (var key in test_tile[0]) {
-  // этот код будет вызван для каждого свойства объекта
-  // ..и выведет имя свойства и его значение
+    // этот код будет вызван для каждого свойства объекта
+    // ..и выведет имя свойства и его значение
 
-  console.log( "Ключ: " + key + " значение: " + test_tile[0][key] );
+    console.log("Ключ: " + key + " значение: " + test_tile[0][key]);
 }
 
 console.log('end');
