@@ -115,10 +115,10 @@ function Fat_Tile(x, y, rot) {
 
 function Thin_Tile(x, y, rot) {
 
-    this.A = new Point(-50 * Math.cos(alpha/2), 0);
-    this.B = new Point(0, 50 * Math.sin(alpha/2));
-    this.C = new Point(50 * Math.cos(alpha/2), 0);
-    this.D = new Point(0, -50 * Math.sin(alpha/2));
+    this.A = new Point(-50 * Math.cos(alpha / 2), 0);
+    this.B = new Point(0, 50 * Math.sin(alpha / 2));
+    this.C = new Point(50 * Math.cos(alpha / 2), 0);
+    this.D = new Point(0, -50 * Math.sin(alpha / 2));
 
     this.vert = [];
     this.vert[0] = this.A;
@@ -173,7 +173,7 @@ function Thin_Tile(x, y, rot) {
     // this.tile = new Path(this.vertices);
     // this.tile.fillColor = 'red';
     for (var i = 0; i < 4; i++) {
-        this.edge[i].strokeColor = 'blue';
+        this.edge[i].strokeColor = 'black';
         this.edge[i].strokeWidth = '2';
         // this.edge[i].position += [x, y];
         // this.edge[i].rotate(rot, [x, y]);
@@ -235,8 +235,8 @@ function place_fat_by_edge(tile, num) {
     var y1 = tile.edge[num].firstSegment.point.y;
     var x2 = tile.edge[num].lastSegment.point.x;
     var y2 = tile.edge[num].lastSegment.point.y;
-    tile.edge[num].strokeColor = 'purple';
-    tile.edge[num].strokeWidth = '4';
+    // tile.edge[num].strokeColor = 'purple';
+    // tile.edge[num].strokeWidth = '4';
     //is it outer?
 
     // var start_cir = new Shape.Circle([x1, y1], 10);
@@ -275,7 +275,7 @@ function place_fat_by_edge(tile, num) {
         // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
         // temp_vec_path.strokeColor = 'green';
         centre = tile.vert[1] + (tile.bc + tempvec) / 2;
-        tile.edge[1].strokeColor = 'pink';
+        // tile.edge[1].strokeColor = 'pink';
 
         var ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
     }
@@ -287,7 +287,7 @@ function place_fat_by_edge(tile, num) {
         // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
         // temp_vec_path.strokeColor = 'green';
         centre = tile.vert[2] + (tile.cd + tempvec) / 2;
-        tile.edge[2].strokeColor = 'pink';
+        // tile.edge[2].strokeColor = 'pink';
 
         var ytile = new Fat_Tile(centre.x, centre.y, -72 + tile.rotation);
     }
@@ -295,12 +295,109 @@ function place_fat_by_edge(tile, num) {
     //case DA
     if (case_need_to_rewrite == 3) {
         tempvec = tile.da.rotate(108, [0, 0]);
-        var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
-        temp_vec_path.strokeColor = 'green';
+        // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+        // temp_vec_path.strokeColor = 'green';
         centre = tile.vert[3] + (tile.da + tempvec) / 2;
-        tile.edge[3].strokeColor = 'pink';
+        // tile.edge[3].strokeColor = 'pink';
 
         var ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
+    }
+
+    return ytile;
+
+}
+
+
+// =====================================================================================
+// =       ==  ==========  ======     ==        =====        =  ====  =    =  =======  =
+// =  ====  =  =========    ====  ===  =  ==============  ====  ====  ==  ==   ======  =
+// =  ====  =  ========  ==  ==  =======  ==============  ====  ====  ==  ==    =====  =
+// =  ====  =  =======  ====  =  =======  ==============  ====  ====  ==  ==  ==  ===  =
+// =       ==  =======  ====  =  =======      ==========  ====        ==  ==  ===  ==  =
+// =  =======  =======        =  =======  ==============  ====  ====  ==  ==  ====  =  =
+// =  =======  =======  ====  =  =======  ==============  ====  ====  ==  ==  =====    =
+// =  =======  =======  ====  ==  ===  =  ==============  ====  ====  ==  ==  ======   =
+// =  =======        =  ====  ===     ==        ========  ====  ====  =    =  =======  =
+// =====================================================================================
+
+
+//place xtile to edge number 'num' of tile:
+function place_thin_by_edge(tile, num) {
+
+    var case_need_to_rewrite = -1;
+    var tempvec = new Point(0, 0);
+    var centre = new Point(0, 0);
+    var x1 = tile.edge[num].firstSegment.point.x;
+    var y1 = tile.edge[num].firstSegment.point.y;
+    var x2 = tile.edge[num].lastSegment.point.x;
+    var y2 = tile.edge[num].lastSegment.point.y;
+    // tile.edge[num].strokeColor = 'purple';
+    // tile.edge[num].strokeWidth = '4';
+    //is it outer?
+
+    // var start_cir = new Shape.Circle([x1, y1], 10);
+    // start_cir.strokeColor = 'blue';
+    // var end_cir = new Shape.Circle([x2, y2], 20);
+    // end_cir.strokeColor = 'pink';
+
+    if (tile.edge[num].vert == 'ab') {
+
+        case_need_to_rewrite = 0;
+    }
+    if (tile.edge[num].vert == 'bc') {
+
+        case_need_to_rewrite = 1;
+    }
+    if (tile.edge[num].vert == 'cd') {
+
+        case_need_to_rewrite = 2;
+    }
+    if (tile.edge[num].vert == 'da') {
+
+        case_need_to_rewrite = 3;
+    }
+
+    //CASE AB -- 0th case:
+    if (case_need_to_rewrite == 0) {
+        tempvec = tile.ab.rotate(36, [0, 0]);
+        // var temp_vec_path = new Path(tile.vert[0], tile.vert[0]+tempvec);
+        // temp_vec_path.strokeColor = 'green';
+        centre = tile.vert[0] + (tile.ab + tempvec) / 2;
+
+        var ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
+    }
+
+    //CASE BC -- 1th case:
+    if (case_need_to_rewrite == 1) {
+        tempvec = tile.bc.rotate(144, [0, 0]);
+        // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
+        // temp_vec_path.strokeColor = 'green';
+        centre = tile.vert[1] + (tile.bc + tempvec) / 2;
+        // tile.edge[1].strokeColor = 'pink';
+
+        var ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
+    }
+
+    //CASE CD -- 2th case:
+    if (case_need_to_rewrite == 2) {
+        tempvec = tile.cd.rotate(36, [0, 0]);
+        // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
+        // temp_vec_path.strokeColor = 'green';
+        centre = tile.vert[2] + (tile.cd + tempvec) / 2;
+        // tile.edge[2].strokeColor = 'pink';
+
+        var ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
+    }
+
+    //case DA
+    if (case_need_to_rewrite == 3) {
+        tempvec = tile.da.rotate(144, [0, 0]);
+        // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+        // temp_vec_path.strokeColor = 'green';
+        centre = tile.vert[3] + (tile.da + tempvec) / 2;
+        // tile.edge[3].strokeColor = 'pink';
+
+        var ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
     }
 
     return ytile;
@@ -320,20 +417,54 @@ function place_fat_by_edge(tile, num) {
 // =  =======    =  =======  =       ======  =======  =        =  ====  =  ====  =      ======  ====
 // =================================================================================================
 
-function find_tile_w_that_vertice(vertice) {
+
+function find_tile_w_that_vertice(vertice, sometiles) {
     nearby = [];
+    var epsilon = 0.001;
     var count = 0;
-    for (var i = 0; i < tile.length; i++) {
+
+    // console.log('sometiles.length', sometiles.length);
+    // console.log(vertice  - sometiles[1].vert[1]);
+    // console.log(sometiles[1].vert[1]);
+
+    // console.log((vertice.x - sometiles[i].vert[j].x < epsilon));
+    // console.log((vertice.y - sometiles[i].vert[j].y < epsilon));
+    // (vertice.x - sometiles[i].vert[j].x <= epsilon)
+
+    // (vertice.y - sometiles[i].vert[j].y <= epsilon)
+    for (var i = 0; i < sometiles.length; i++) {
         for (var j = 0; j < 4; j++) {
-            if (vertice == tile[i].vert[j]) {
-                nearby[count] = tile[i];
+            if ((Math.abs(vertice.x - sometiles[i].vert[j].x) <= epsilon) &&
+                (Math.abs(vertice.y - sometiles[i].vert[j].y) <= epsilon))
+            {
+
+
+                nearby[count] = sometiles[i];
                 count++;
+
+                // console.log('.x -.x ', vertice.x - sometiles[i].vert[j].x);
+                // console.log('.y - sometiles[i].vert[j].y ', vertice.y - sometiles[i].vert[j].y);
+                // console.log('i ', i);
+                // console.log('j ', j);
+                // console.log('count', count);
+
+                // break;
+
             }
         }
     }
-    console.log(count);
+    // for (var i = 0; i < sometiles.length; i++) {
+    //     for (var j = 0; j < 4; j++) {
+    //         if (vertice == sometiles[i].vert[j]) {
+    //             nearby[count] = sometiles[i];
+    //             count++;
+    //         }
+    //     }
+    // }
+    console.log('count = ', count);
     var myCircle = new Path.Circle(vertice, 10);
     myCircle.fillColor = 'green';
+
 
 
 }
@@ -358,8 +489,6 @@ function mark_tiles(tiles) {
         }
     }
 }
-
-
 
 // =====================================================================
 // =================  =====  ====  ====    =  =======  =================
@@ -387,30 +516,33 @@ tile = [];
 // }
 
 
-center_tile = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
-// center_tile.edge[0].strokeColor = 'blue';
-// center_tile.edge[0].strokeWidth = '5';
-//
-//
-tile[0] = place_fat_by_edge(center_tile, 0);
-// test_tile[4] = place_fat_by_edge(test_tile[3], 0);
-// test_tile[5] = place_fat_by_edge(test_tile[4], 0);
-// test_tile[6] = place_fat_by_edge(test_tile[5], 0);
+center_tile = new Fat_Tile(paper.view.center.x * 0.25, paper.view.center.y, 0);
 
+tile[0] = place_fat_by_edge(center_tile, 0);
 tile[1] = place_fat_by_edge(center_tile, 1);
 tile[2] = place_fat_by_edge(center_tile, 2);
 tile[3] = place_fat_by_edge(center_tile, 3);
 tile[4] = place_fat_by_edge(tile[1], 1);
-tile[5] = place_fat_by_edge(tile[4], 1);
+tile[5] = place_thin_by_edge(tile[4], 1);
 
 
-tile[6]= new Thin_Tile(800, 100, 0);
 
 
-find_tiles_w_that_vertice(center_tile.vert[3]);
 
+find_tile_w_that_vertice(center_tile.vert[2], tile);
 
 mark_tiles(nearby);
+console.log('nearby.length = ', nearby.length);
+
+thin = [];
+
+// thin[0] = new Thin_Tile(paper.view.center.x, paper.view.center.y, 0);
+// thin[1]=  place_thin_by_edge(thin[0], 0);
+// thin[1]=  place_thin_by_edge(thin[0], 1);
+// thin[1]=  place_thin_by_edge(thin[0], 2);
+// thin[1]=  place_thin_by_edge(thin[0], 3);
+
+
 
 // var A = new Point(-50 * Math.cos(alpha), 0);
 // var B = new Point(0, 50 * Math.sin(alpha));
