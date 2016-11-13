@@ -17,6 +17,10 @@ var j = 0;
 
 function Fat_Tile(x, y, rot) {
 
+    this.outer = true;
+    this.rotation = rot;
+    this.kind = 'fat';
+
     this.A = new Point(-50 * Math.cos(alpha), 0);
     this.B = new Point(0, 50 * Math.sin(alpha));
     this.C = new Point(50 * Math.cos(alpha), 0);
@@ -52,7 +56,7 @@ function Fat_Tile(x, y, rot) {
     decoration_blue.strokeColor = 'blue';
     decoration_blue.strokeWidth = '3';
 
-    var decoration_red = new Path.Arc(this.vert[2] - this.bc / 2, this.vert[2] - (this.ab + this.bc) / 3, this.vert[2] + this.cd / 2);
+    var decoration_red = new Path.Arc(this.vert[2] - this.bc *3 / 4, this.vert[2] - (this.ab + this.bc) /(2+1/4), this.vert[2] + this.cd * 3/4);
     decoration_red.strokeColor = 'red';
     decoration_red.strokeWidth = '3';
 
@@ -74,15 +78,14 @@ function Fat_Tile(x, y, rot) {
 
     // this.tile = new Path(this.vertices);
     // this.tile.fillColor = 'red';
-    for (var i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         this.edge[i].strokeColor = 'black';
         this.edge[i].strokeWidth = '2';
         // this.edge[i].position += [x, y];
         // this.edge[i].rotate(rot, [x, y]);
     }
 
-    this.outer = true;
-    this.rotation = rot;
+
 
     function mark() {
         for (var i = 0; i < 4; i++) {
@@ -114,6 +117,11 @@ function Fat_Tile(x, y, rot) {
 // =====================================================================================
 
 function Thin_Tile(x, y, rot) {
+
+
+    this.outer = true;
+    this.rotation = rot;
+    this.kind = 'thin';
 
     this.A = new Point(-50 * Math.cos(alpha / 2), 0);
     this.B = new Point(0, 50 * Math.sin(alpha / 2));
@@ -150,7 +158,7 @@ function Thin_Tile(x, y, rot) {
     decoration_blue.strokeColor = 'blue';
     decoration_blue.strokeWidth = '3';
 
-    var decoration_red = new Path.Arc(this.vert[3] + this.da / 3, this.vert[3] + this.da / 4 - this.cd / 4, this.vert[3] - this.cd / 3);
+    var decoration_red = new Path.Arc(this.vert[3] + this.da / 4, this.vert[3] + this.da / 4 - this.cd / 4, this.vert[3] - this.cd / 4);
     decoration_red.strokeColor = 'red';
     decoration_red.strokeWidth = '3';
 
@@ -172,15 +180,13 @@ function Thin_Tile(x, y, rot) {
 
     // this.tile = new Path(this.vertices);
     // this.tile.fillColor = 'red';
-    for (var i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
         this.edge[i].strokeColor = 'black';
         this.edge[i].strokeWidth = '2';
         // this.edge[i].position += [x, y];
         // this.edge[i].rotate(rot, [x, y]);
     }
 
-    this.outer = true;
-    this.rotation = rot;
 
     function mark() {
         for (var i = 0; i < 4; i++) {
@@ -208,7 +214,7 @@ function Thin_Tile(x, y, rot) {
 
 function move_tile(tile, x, y) {
     tile.tile.position += [x, y];
-    console.log('move')
+    console.log('move');
 }
 
 
@@ -235,8 +241,8 @@ function place_fat_by_edge(tile, num) {
     var y1 = tile.edge[num].firstSegment.point.y;
     var x2 = tile.edge[num].lastSegment.point.x;
     var y2 = tile.edge[num].lastSegment.point.y;
-    // tile.edge[num].strokeColor = 'purple';
-    // tile.edge[num].strokeWidth = '4';
+    tile.edge[num].strokeColor = 'purple';
+    tile.edge[num].strokeWidth = '4';
     //is it outer?
 
     // var start_cir = new Shape.Circle([x1, y1], 10);
@@ -244,64 +250,163 @@ function place_fat_by_edge(tile, num) {
     // var end_cir = new Shape.Circle([x2, y2], 20);
     // end_cir.strokeColor = 'pink';
 
-    if (tile.edge[num].vert == 'ab') {
-        // console.log('we need to fit tile with da')
-        case_need_to_rewrite = 0;
+
+
+    // ===    ==================================    =============
+    // ==  ==  ================================  ==  ============
+    // ==  ============  =======  =============  ============  ==
+    // =    =====   ==    =====    ==   ======    =====   ==    =
+    // ==  =====  =  ==  =======  ==     ======  =====  =  ==  ==
+    // ==  ========  ==  =======  ==  =  ======  ========  ==  ==
+    // ==  ======    ==  =======  ==  =  ======  ======    ==  ==
+    // ==  =====  =  ==  =======  ==  =  ======  =====  =  ==  ==
+    // ==  ======    ==   ======   ==   =======  ======    ==   =
+    // ==========================================================
+    if (tile.kind == 'fat') {
+
+        console.log('fat');
+
+        if (tile.edge[num].vert == 'ab') {
+            // console.log('we need to fit tile with da')
+            case_need_to_rewrite = 0;
+        }
+        if (tile.edge[num].vert == 'bc') {
+            // console.log('we need to fit tile with cd')
+            case_need_to_rewrite = 1;
+        }
+        if (tile.edge[num].vert == 'cd') {
+            // console.log('we need to fit tile with bc')
+            case_need_to_rewrite = 2;
+        }
+        if (tile.edge[num].vert == 'da') {
+            // console.log('we need to fit tile with ab')
+            case_need_to_rewrite = 3;
+        }
+
+
+        //CASE AB -- 0th case:
+        if (case_need_to_rewrite === 0) {
+            tempvec = tile.ab.rotate(72, [0, 0]);
+            centre = tile.vert[0] + (tile.ab + tempvec) / 2;
+
+            ytile = new Fat_Tile(centre.x, centre.y, -72 + tile.rotation);
+        }
+        //CASE BC -- 1th case:
+
+        if (case_need_to_rewrite == 1) {
+            tempvec = tile.bc.rotate(108, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[1] + (tile.bc + tempvec) / 2;
+            // tile.edge[1].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
+        }
+
+
+        //CASE CD -- 2th case:
+        if (case_need_to_rewrite == 2) {
+            tempvec = tile.cd.rotate(72, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[2] + (tile.cd + tempvec) / 2;
+            // tile.edge[2].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, -72 + tile.rotation);
+        }
+
+        //case DA
+        if (case_need_to_rewrite == 3) {
+            tempvec = tile.da.rotate(108, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[3] + (tile.da + tempvec) / 2;
+            // tile.edge[3].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
+        }
     }
-    if (tile.edge[num].vert == 'bc') {
-        // console.log('we need to fit tile with cd')
-        case_need_to_rewrite = 1;
+
+
+    // ===========================================================
+    // ===    =====================================  =============
+    // ==  ==  ====================================  =============
+    // ==  ============  =======  =============  ==  =============
+    // =    =====   ==    =====    ==   ======    =  ====  =  = ==
+    // ==  =====  =  ==  =======  ==     ======  ==    =====     =
+    // ==  ========  ==  =======  ==  =  ======  ==  =  =  =  =  =
+    // ==  ======    ==  =======  ==  =  ======  ==  =  =  =  =  =
+    // ==  =====  =  ==  =======  ==  =  ======  ==  =  =  =  =  =
+    // ==  ======    ==   ======   ==   =======   =  =  =  =  =  =
+    // ===========================================================
+
+    if (tile.kind == 'thin') {
+
+        console.log('i cant do it ');
+
+        if (tile.edge[num].vert == 'ab') {
+            // console.log('we need to fit tile with da')
+            case_need_to_rewrite = 0;
+        }
+        if (tile.edge[num].vert == 'bc') {
+            // console.log('we need to fit tile with cd')
+            case_need_to_rewrite = 1;
+        }
+        if (tile.edge[num].vert == 'cd') {
+            // console.log('we need to fit tile with bc')
+            case_need_to_rewrite = 2;
+        }
+        if (tile.edge[num].vert == 'da') {
+            // console.log('we need to fit tile with ab')
+            case_need_to_rewrite = 3;
+        }
+
+
+        //CASE AB -- 0th case:
+        if (case_need_to_rewrite === 0) {
+            tempvec = tile.ab.rotate(108, [0, 0]);
+            centre = tile.vert[0] + (tile.ab + tempvec) / 2;
+            var temp_vec_path = new Path(tile.vert[1], tile.vert[1] + tempvec);
+            temp_vec_path.strokeColor = 'green';
+
+            ytile = new Fat_Tile(centre.x, centre.y, 198 + tile.rotation);
+        }
+        //CASE BC -- 1th case:
+
+        if (case_need_to_rewrite == 1) {
+            tempvec = tile.bc.rotate(72, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[1] + (tile.bc + tempvec) / 2;
+            // tile.edge[1].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, -18 + tile.rotation);
+        }
+
+
+        //CASE CD -- 2th case:
+        if (case_need_to_rewrite == 2) {
+            tempvec = tile.cd.rotate(108, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[2] + (tile.cd + tempvec) / 2;
+            // tile.edge[2].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, 198 + tile.rotation);
+        }
+
+        //case DA
+        if (case_need_to_rewrite == 3) {
+            tempvec = tile.da.rotate(72, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[3] + (tile.da + tempvec) / 2;
+            // tile.edge[3].strokeColor = 'pink';
+
+            ytile = new Fat_Tile(centre.x, centre.y, -18 + tile.rotation);
+        }
     }
-    if (tile.edge[num].vert == 'cd') {
-        // console.log('we need to fit tile with bc')
-        case_need_to_rewrite = 2;
-    }
-    if (tile.edge[num].vert == 'da') {
-        // console.log('we need to fit tile with ab')
-        case_need_to_rewrite = 3;
-    }
 
-    //CASE AB -- 0th case:
-    if (case_need_to_rewrite == 0) {
-        tempvec = tile.ab.rotate(72, [0, 0]);
-        centre = tile.vert[0] + (tile.ab + tempvec) / 2;
-
-        var ytile = new Fat_Tile(centre.x, centre.y, -72 + tile.rotation);
-    }
-    //CASE BC -- 1th case:
-
-    if (case_need_to_rewrite == 1) {
-        tempvec = tile.bc.rotate(108, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[1] + (tile.bc + tempvec) / 2;
-        // tile.edge[1].strokeColor = 'pink';
-
-        var ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
-    }
-
-
-    //CASE CD -- 2th case:
-    if (case_need_to_rewrite == 2) {
-        tempvec = tile.cd.rotate(72, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[2] + (tile.cd + tempvec) / 2;
-        // tile.edge[2].strokeColor = 'pink';
-
-        var ytile = new Fat_Tile(centre.x, centre.y, -72 + tile.rotation);
-    }
-
-    //case DA
-    if (case_need_to_rewrite == 3) {
-        tempvec = tile.da.rotate(108, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[3] + (tile.da + tempvec) / 2;
-        // tile.edge[3].strokeColor = 'pink';
-
-        var ytile = new Fat_Tile(centre.x, centre.y, 72 + tile.rotation);
-    }
 
     return ytile;
 
@@ -340,66 +445,155 @@ function place_thin_by_edge(tile, num) {
     // var end_cir = new Shape.Circle([x2, y2], 20);
     // end_cir.strokeColor = 'pink';
 
-    if (tile.edge[num].vert == 'ab') {
 
-        case_need_to_rewrite = 0;
+    // ===========================================================
+    // ======  ==================================    =============
+    // ======  =================================  ==  ============
+    // ==  ==  ==================  =============  ============  ==
+    // =    =  ====  =  = ======    ==   ======    =====   ==    =
+    // ==  ==    =====     ======  ==     ======  =====  =  ==  ==
+    // ==  ==  =  =  =  =  ======  ==  =  ======  ========  ==  ==
+    // ==  ==  =  =  =  =  ======  ==  =  ======  ======    ==  ==
+    // ==  ==  =  =  =  =  ======  ==  =  ======  =====  =  ==  ==
+    // ==   =  =  =  =  =  ======   ==   =======  ======    ==   =
+    // ===========================================================
+
+    if (tile.kind == 'fat') {
+        if (tile.edge[num].vert == 'ab') {
+
+            case_need_to_rewrite = 0;
+        }
+        if (tile.edge[num].vert == 'bc') {
+
+            case_need_to_rewrite = 1;
+        }
+        if (tile.edge[num].vert == 'cd') {
+
+            case_need_to_rewrite = 2;
+        }
+        if (tile.edge[num].vert == 'da') {
+
+            case_need_to_rewrite = 3;
+        }
+
+        //CASE AB -- 0th case:
+        if (case_need_to_rewrite === 0) {
+            tempvec = tile.ab.rotate(144, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[0], tile.vert[0]+tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[0] + (tile.ab + tempvec) / 2;
+
+            ytile = new Thin_Tile(centre.x, centre.y, 162 + tile.rotation);
+        }
+
+        //CASE BC -- 1th case:
+        if (case_need_to_rewrite == 1) {
+            tempvec = tile.bc.rotate(144, [0, 0]);
+            var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
+            temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[1] + (tile.bc + tempvec) / 2;
+            // tile.edge[1].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, 54 + tile.rotation);
+        }
+
+        //CASE CD -- 2th case:
+        if (case_need_to_rewrite == 2) {
+            tempvec = tile.cd.rotate(36, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[2] + (tile.cd + tempvec) / 2;
+            // tile.edge[2].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, 126 + tile.rotation);
+        }
+
+        //case DA
+        if (case_need_to_rewrite == 3) {
+            tempvec = tile.da.rotate(36, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[3] + (tile.da + tempvec) / 2;
+            // tile.edge[3].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, 18 + tile.rotation);
+        }
     }
-    if (tile.edge[num].vert == 'bc') {
 
-        case_need_to_rewrite = 1;
+    //
+    // ============================================================
+    // ======  =====================================  =============
+    // ======  =====================================  =============
+    // ==  ==  ==================  =============  ==  =============
+    // =    =  ====  =  = ======    ==   ======    =  ====  =  = ==
+    // ==  ==    =====     ======  ==     ======  ==    =====     =
+    // ==  ==  =  =  =  =  ======  ==  =  ======  ==  =  =  =  =  =
+    // ==  ==  =  =  =  =  ======  ==  =  ======  ==  =  =  =  =  =
+    // ==  ==  =  =  =  =  ======  ==  =  ======  ==  =  =  =  =  =
+    // ==   =  =  =  =  =  ======   ==   =======   =  =  =  =  =  =
+    // ============================================================
+
+    if (tile.kind == 'thin') {
+        if (tile.edge[num].vert == 'ab') {
+
+            case_need_to_rewrite = 0;
+        }
+        if (tile.edge[num].vert == 'bc') {
+
+            case_need_to_rewrite = 1;
+        }
+        if (tile.edge[num].vert == 'cd') {
+
+            case_need_to_rewrite = 2;
+        }
+        if (tile.edge[num].vert == 'da') {
+
+            case_need_to_rewrite = 3;
+        }
+
+        //CASE AB -- 0th case:
+        if (case_need_to_rewrite === 0) {
+            tempvec = tile.ab.rotate(36, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[0], tile.vert[0]+tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[0] + (tile.ab + tempvec) / 2;
+
+            ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
+        }
+
+        //CASE BC -- 1th case:
+        if (case_need_to_rewrite == 1) {
+            tempvec = tile.bc.rotate(144, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[1] + (tile.bc + tempvec) / 2;
+            // tile.edge[1].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
+        }
+
+        //CASE CD -- 2th case:
+        if (case_need_to_rewrite == 2) {
+            tempvec = tile.cd.rotate(36, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[2] + (tile.cd + tempvec) / 2;
+            // tile.edge[2].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
+        }
+
+        //case DA
+        if (case_need_to_rewrite == 3) {
+            tempvec = tile.da.rotate(144, [0, 0]);
+            // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
+            centre = tile.vert[3] + (tile.da + tempvec) / 2;
+            // tile.edge[3].strokeColor = 'pink';
+
+            ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
+        }
     }
-    if (tile.edge[num].vert == 'cd') {
-
-        case_need_to_rewrite = 2;
-    }
-    if (tile.edge[num].vert == 'da') {
-
-        case_need_to_rewrite = 3;
-    }
-
-    //CASE AB -- 0th case:
-    if (case_need_to_rewrite == 0) {
-        tempvec = tile.ab.rotate(36, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[0], tile.vert[0]+tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[0] + (tile.ab + tempvec) / 2;
-
-        var ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
-    }
-
-    //CASE BC -- 1th case:
-    if (case_need_to_rewrite == 1) {
-        tempvec = tile.bc.rotate(144, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[1], tile.vert[1]+tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[1] + (tile.bc + tempvec) / 2;
-        // tile.edge[1].strokeColor = 'pink';
-
-        var ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
-    }
-
-    //CASE CD -- 2th case:
-    if (case_need_to_rewrite == 2) {
-        tempvec = tile.cd.rotate(36, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[2] + (tile.cd + tempvec) / 2;
-        // tile.edge[2].strokeColor = 'pink';
-
-        var ytile = new Thin_Tile(centre.x, centre.y, 144 + tile.rotation);
-    }
-
-    //case DA
-    if (case_need_to_rewrite == 3) {
-        tempvec = tile.da.rotate(144, [0, 0]);
-        // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
-        // temp_vec_path.strokeColor = 'green';
-        centre = tile.vert[3] + (tile.da + tempvec) / 2;
-        // tile.edge[3].strokeColor = 'pink';
-
-        var ytile = new Thin_Tile(centre.x, centre.y, -144 + tile.rotation);
-    }
-
     return ytile;
 
 }
@@ -435,8 +629,7 @@ function find_tile_w_that_vertice(vertice, sometiles) {
     for (var i = 0; i < sometiles.length; i++) {
         for (var j = 0; j < 4; j++) {
             if ((Math.abs(vertice.x - sometiles[i].vert[j].x) <= epsilon) &&
-                (Math.abs(vertice.y - sometiles[i].vert[j].y) <= epsilon))
-            {
+                (Math.abs(vertice.y - sometiles[i].vert[j].y) <= epsilon)) {
 
 
                 nearby[count] = sometiles[i];
@@ -502,7 +695,10 @@ function mark_tiles(tiles) {
 // =================  =====  =  ====  =    =  =======  =================
 // =====================================================================
 
+a_tiles = [];
+b_tiles = [];
 tile = [];
+thin = [];
 // tile[0].fat_tile.removeSegment(3)
 
 // test_tile[2] = place_fat_by_edge(test_tile[0], 2);
@@ -516,31 +712,22 @@ tile = [];
 // }
 
 
-center_tile = new Fat_Tile(paper.view.center.x * 0.25, paper.view.center.y, 0);
-
-tile[0] = place_fat_by_edge(center_tile, 0);
-tile[1] = place_fat_by_edge(center_tile, 1);
-tile[2] = place_fat_by_edge(center_tile, 2);
-tile[3] = place_fat_by_edge(center_tile, 3);
-tile[4] = place_fat_by_edge(tile[1], 1);
-tile[5] = place_thin_by_edge(tile[4], 1);
+b_tiles[0] = new Fat_Tile(paper.view.center.x * 1.5, paper.view.center.y, 0);
+b_tiles.push( new place_fat_by_edge(b_tiles[0],1));
+b_tiles.push( new place_thin_by_edge(b_tiles[1],1));
 
 
 
+// thin[1] = place_fat_by_edge(thin[0], 0);
+// thin[2] = place_fat_by_edge(thin[0], 1);
+// thin[3] = place_fat_by_edge(thin[0], 2);
+// thin[4] = place_fat_by_edge(thin[0], 3);
 
-
-find_tile_w_that_vertice(center_tile.vert[2], tile);
-
-mark_tiles(nearby);
-console.log('nearby.length = ', nearby.length);
-
-thin = [];
-
-// thin[0] = new Thin_Tile(paper.view.center.x, paper.view.center.y, 0);
-// thin[1]=  place_thin_by_edge(thin[0], 0);
-// thin[1]=  place_thin_by_edge(thin[0], 1);
-// thin[1]=  place_thin_by_edge(thin[0], 2);
-// thin[1]=  place_thin_by_edge(thin[0], 3);
+thin[0]= new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+// thin[1] = place_thin_by_edge(thin[0], 0);
+thin[1] = place_thin_by_edge(thin[0], 1);
+thin[1] = place_thin_by_edge(thin[0], 2);
+// thin[1] = place_thin_by_edge(thin[0], 3);
 
 
 
