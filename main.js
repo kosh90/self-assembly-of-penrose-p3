@@ -3,6 +3,7 @@ var alpha = Math.PI / 5;
 var side = 50;
 var i = 0;
 var j = 0;
+var epsilon = 0.001;
 
 
 // ==============================================================================================================
@@ -18,6 +19,7 @@ var j = 0;
 // ==============================================================================================================
 // >
 function Allowed_Pattens() {
+	var k=0;
     allowed_pattern = [];
     allowed_pattern[0] = ['>', '72', '>', '72', '>', '72', '>', '72', '>', '72'];
     allowed_pattern[1] = [];
@@ -41,6 +43,26 @@ function Allowed_Pattens() {
 
     allowed_pattern[0] = points;
 
+
+
+
+    points = [];
+    points.push(new Point(50, 0));
+    points[0].kind = 'single_inward_arrow';
+
+    points.push(new Point(50 * Math.cos(-4 * alpha ), 50 * Math.sin(-4 * alpha )));
+    points[1].kind = 'single_inward_arrow';
+
+    points.push(new Point(50 * Math.cos(3*alpha ), 50 * Math.sin(3 * alpha)));
+    points[2].kind = 'double_outward_arrow';
+
+
+
+    allowed_pattern[1] = points;
+
+
+
+
     points = [];
     points.push(new Point(50 * Math.cos(2 * alpha), 50 * Math.sin(2 * alpha)));
     points[0].kind = 'single_outward_arrow';
@@ -61,7 +83,46 @@ function Allowed_Pattens() {
     points[5].kind = 'single_outward_arrow';
 
 
-    allowed_pattern[1] = points;
+    allowed_pattern[2] = points;
+
+
+
+
+    points = [];
+    points.push(new Point(50, 0));
+    points[0].kind = 'single_outward_arrow';
+
+		k = - alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[1].kind = 'single_outward_arrow';
+
+		k = k - alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[2].kind = 'single_outward_arrow';
+
+		k = k - 2* alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[3].kind = 'single_outward_arrow';
+
+		k = k - alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[4].kind = 'double_outward_arrow';
+
+		k = k - alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[5].kind = 'single_outward_arrow';
+
+		k = k - 2* alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[5].kind = 'single_outward_arrow';
+
+		k = k - 2* alpha;
+		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points[5].kind = 'single_outward_arrow';
+
+
+
+    allowed_pattern[3] = points;
 
 }
 
@@ -134,9 +195,17 @@ function Fat_Tile(x, y, rot) {
     this.edge[3].vert = 'da';
 
     this.edge[0].vec = this.ab;
+    this.edge[0].vec.kind = 'double_inward_arrow';
+
     this.edge[1].vec = this.bc;
+    this.edge[1].vec.kind = 'single_inward_arrow';
+
     this.edge[2].vec = this.cd;
+    this.edge[2].vec.kind = 'single_outward_arrow';
+
     this.edge[3].vec = this.da;
+    this.edge[3].vec.kind = 'double_outward_arrow';
+
 
     this.edge[0].outer = true;
     this.edge[1].outer = true;
@@ -241,9 +310,16 @@ function Thin_Tile(x, y, rot) {
 
 
     this.edge[0].vec = this.ab;
+    this.edge[0].vec.kind = 'double_outward_arrow';
+
     this.edge[1].vec = this.bc;
+    this.edge[1].vec.kind = 'double_inward_arrow';
+
     this.edge[2].vec = this.cd;
+    this.edge[2].vec.kind = 'single_outward_arrow';
+
     this.edge[3].vec = this.da;
+    this.edge[3].vec.kind = 'single_inward_arrow';
 
 
     this.edge[0].outer = true;
@@ -415,7 +491,7 @@ function place_fat_by_edge(tile, num) {
 
     if (tile.kind == 'thin') {
 
-        console.log('i cant do it ');
+        // console.log('i cant do it ');
 
         if (tile.edge[num].vert == 'ab') {
             // console.log('we need to fit tile with da')
@@ -439,8 +515,8 @@ function place_fat_by_edge(tile, num) {
         if (case_need_to_rewrite === 0) {
             tempvec = tile.ab.rotate(108, [0, 0]);
             centre = tile.vert[0] + (tile.ab + tempvec) / 2;
-            var temp_vec_path = new Path(tile.vert[1], tile.vert[1] + tempvec);
-            temp_vec_path.strokeColor = 'green';
+            // var temp_vec_path = new Path(tile.vert[1], tile.vert[1] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
 
             ytile = new Fat_Tile(centre.x, centre.y, 198 + tile.rotation);
         }
@@ -459,24 +535,24 @@ function place_fat_by_edge(tile, num) {
 
         //CASE CD -- 2th case:
         if (case_need_to_rewrite == 2) {
-            tempvec = tile.cd.rotate(108, [0, 0]);
+            tempvec = tile.cd.rotate(72, [0, 0]);
             // var temp_vec_path = new Path(tile.vert[2], tile.vert[2] + tempvec);
             // temp_vec_path.strokeColor = 'green';
             centre = tile.vert[2] + (tile.cd + tempvec) / 2;
             // tile.edge[2].strokeColor = 'pink';
 
-            ytile = new Fat_Tile(centre.x, centre.y, 198 + tile.rotation);
+            ytile = new Fat_Tile(centre.x, centre.y, -54 + tile.rotation);
         }
 
         //case DA
         if (case_need_to_rewrite == 3) {
-            tempvec = tile.da.rotate(72, [0, 0]);
+            tempvec = tile.da.rotate(108, [0, 0]);
             // var temp_vec_path = new Path(tile.vert[3], tile.vert[3] + tempvec);
             // temp_vec_path.strokeColor = 'green';
             centre = tile.vert[3] + (tile.da + tempvec) / 2;
             // tile.edge[3].strokeColor = 'pink';
 
-            ytile = new Fat_Tile(centre.x, centre.y, -18 + tile.rotation);
+            ytile = new Fat_Tile(centre.x, centre.y, -18-18-36-36-18 + tile.rotation);
         }
     }
 
@@ -714,12 +790,16 @@ function find_tiles_w_that_vertice(vertice, sometiles) {
 
                 if (j > 0) {
                     nearby_edges_as_vectors.push(sometiles[i].edge[j].vec);
-                    nearby_edges_as_vectors.push(sometiles[i].edge[j - 1].vec * (-1));
+                    // nearby_edges_as_vectors.push(sometiles[i].edge[j - 1].vec * (-1)); //not working
+                    nearby_edges_as_vectors.push(reverse_vec(sometiles[i].edge[j - 1].vec));
+
                     edges_count += 2;
                 }
                 if (j === 0) {
                     nearby_edges_as_vectors.push(sometiles[i].edge[0].vec);
-                    nearby_edges_as_vectors.push(sometiles[i].edge[3].vec * (-1));
+                    // nearby_edges_as_vectors.push(sometiles[i].edge[3].vec * (-1));  //not WORKING
+                    nearby_edges_as_vectors.push(reverse_vec(sometiles[i].edge[3].vec));
+
                     edges_count += 2;
                 }
 
@@ -856,7 +936,7 @@ function is_collinear(vec1, vec2) {
 // ================================================================================================
 function get_unic_vec(vectors) {
     var epsilon = 0.001;
-
+		console.log('get_unic_vec');
     unique_edges_as_vectors = [];
     unique_edges_as_vectors[0] = nearby_edges_as_vectors[0];
 
@@ -865,16 +945,15 @@ function get_unic_vec(vectors) {
             unique_edges_as_vectors.push(nearby_edges_as_vectors[i]);
         }
         // console.log('i', i);
+
     }
 
     function already_in_uniques(edge_as_vec) {
 
         for (var j = 0; j < unique_edges_as_vectors.length; j++) {
             // console.log('j', j);
-
-            if ((edge_as_vec.x - unique_edges_as_vectors[j].x < epsilon) &&
-                (edge_as_vec.y - unique_edges_as_vectors[j].y < epsilon)) {
-                console.log('ravno');
+            if (vectors_are_equal(edge_as_vec, unique_edges_as_vectors[j])) {
+                // console.log('ravno');
                 // console.log(unique_edges_as_vectors[j].vec);
                 // console.log(edge.vec);
                 // console.log(edge.vec - unique_edges_as_vectors[j].vec);
@@ -941,6 +1020,12 @@ function plot_pattern(vectors, x, y) {
         if (vectors[i].kind == 'double_outward_arrow') {
             pattern_plot[i].strokeColor = 'purple';
         }
+        if (vectors[i].kind == 'single_inward_arrow') {
+            pattern_plot[i].strokeColor = 'yellow';
+        }
+        if (vectors[i].kind == 'double_inward_arrow') {
+            pattern_plot[i].strokeColor = 'blue';
+        }
 
     }
 }
@@ -974,9 +1059,159 @@ function sort_vec(vectors) {
 }
 
 
+function reverse_vec(vector) {
+    if (vector.kind == 'single_outward_arrow') {
+        vector = vector * (-1);
+        vector.kind = 'single_inward_arrow';
+        return vector;
+
+    }
+    if (vector.kind == 'single_inward_arrow') {
+        vector = vector * (-1);
+        vector.kind = 'single_outward_arrow';
+        return vector;
+
+    }
+    if (vector.kind == 'double_outward_arrow') {
+        vector = vector * (-1);
+        vector.kind = 'double_inward_arrow';
+        return vector;
+
+    }
+    if (vector.kind == 'double_inward_arrow') {
+        vector = vector * (-1);
+        vector.kind = 'double_inward_arrow';
+        return vector;
+
+    }
+}
+
+//
+// ==========================================================================================================
+// =    ==      ======    =        ========  ====  =======  =========    ===  ====  ====  =        =       ==
+// ==  ==  ====  ======  =====  ==========    ===  =======  ========  ==  ==  ====  ====  =  =======  ====  =
+// ==  ==  ====  ======  =====  =========  ==  ==  =======  =======  ====  =  ====  ====  =  =======  ====  =
+// ==  ===  ===========  =====  ========  ====  =  =======  =======  ====  =  ====  ====  =  =======  ====  =
+// ==  =====  =========  =====  ========  ====  =  =======  =======  ====  =   ==    ==  ==      ===  ====  =
+// ==  =======  =======  =====  ========        =  =======  =======  ====  ==  ==    ==  ==  =======  ====  =
+// ==  ==  ====  ======  =====  ========  ====  =  =======  =======  ====  ==  ==    ==  ==  =======  ====  =
+// ==  ==  ====  ======  =====  ========  ====  =  =======  ========  ==  ====    ==    ===  =======  ====  =
+// =    ==      ======    ====  ========  ====  =        =        ===    ======  ====  ====        =       ==
+// ==========================================================================================================
+
+function is_it_allowed(vec) {
+    vec_temp = [];
+    console.log('#############################>>>>>>>>>  IS IT ALLOWED AARHH? <<<<<<<<################################');
+    // console.log(allowed_pattern[1]);
+    // console.log(vec);
+    // console.log('arrows:');
+    // for (var i = 0; i < vec.length; i++) {
+        // console.log(vec[i].kind);
+    // }
+
+
+    // console.log('qq', vec[0].kind);
+    // vec[0] = vec[0] * (-1);
+    // console.log('qqq', vec[0].kind);
+
+    for (i = 0; i < allowed_pattern.length; i++) {
+        console.log('max i', allowed_pattern.length);
+        console.log('############################>>>>>>>>> i', i);
+        for (j = 0; j < allowed_pattern[i].length; j++) {
+            // console.log('rotating, j', j);
+            vec_temp = rotate_and_match(vec, allowed_pattern[i][j].angle);
+            if (patterns_are_equal(vec_temp, i)) {
+                console.log('ALLOWED, patter num', i);
+                console.log('rotation num', j);
+                return 1;
+            }
+        }
+    }
+
+    console.log('NOT ALLOWED');
+    console.log('is it allowed has ended');
+    return 0;
+}
 
 
 
+
+
+
+
+/////////////////
+/////////////////
+function rotate_and_match(vec, angle) {
+
+    angle = angle - vec[0].angle;
+    for (var i = 0; i < vec.length; i++) {
+        // console.log('vec angle old', vec[0]);
+        // vec[i] = vec[i].rotate(angle - vec[0].angle, [0,0]);
+        vec[i] = vec[i].rotate(angle, [0, 0]);
+    }
+    return vec;
+}
+
+
+
+
+
+
+
+/////////////////
+/////////////////
+function patterns_are_equal(vec, n) {
+    var count = 0;
+    for (var i = 0; i < vec.length; i++) {
+        // console.log('patterns_are_equal i', i);
+        for (var j = 0; j < allowed_pattern[n].length; j++) {
+            // console.log('patterns_are_equal j', j);
+
+            if (vectors_are_equal(vec[i], allowed_pattern[n][j])) {
+                count++;
+                // console.log("count", count);
+                // console.log(vec[i], allowed_pattern[n][j]);
+                break;
+
+            }
+
+        }
+
+
+    }
+
+
+    // console.log(vec.length, count);
+    if (count == vec.length) {
+        console.log('patterns_are_equal -- TRUE');
+        return 1;
+
+    }
+
+
+
+    // console.log('patterns_are_equal -- FALSE');
+    return 0;
+
+
+    // console.log('error');
+}
+
+function vectors_are_equal(vec1, vec2) {
+
+    if ((Math.abs(vec1.x - vec2.x) < epsilon) &&
+        (Math.abs(vec1.y - vec2.y) < epsilon)) {
+
+        // console.log('vectors_are_equal -- TRUE');
+        // console.log(vec1.x - vec2.x, vec1.y - vec2.y);
+        return 1;
+    } else {
+
+        // console.log('vectors_are_equal -- FALSE');
+        return 0;
+    }
+
+}
 
 // =====================================================================
 // =================  =====  ====  ====    =  =======  =================
@@ -992,14 +1227,14 @@ function sort_vec(vectors) {
 
 Allowed_Pattens();
 
-plot_pattern(allowed_pattern[0], 1, 1);
-plot_pattern(allowed_pattern[1], 1.2, 1);
+plot_pattern(allowed_pattern[3], 1, 0.5);
+// plot_pattern(allowed_pattern[1], 1.2, 0.5);
 
-console.log(allowed_pattern[0][0].kind);
 
 
 a_tiles = [];
 b_tiles = [];
+c_tiles = [];
 tile = [];
 thin = [];
 // tile[0].fat_tile.removeSegment(3)
@@ -1015,10 +1250,27 @@ thin = [];
 // }
 
 
-b_tiles[0] = new Fat_Tile(paper.view.center.x * 1.5, paper.view.center.y, 0);
+a_tiles[0] = new Fat_Tile(paper.view.center.x * 1.7, paper.view.center.y, 0);
+a_tiles.push(new place_thin_by_edge(a_tiles[0], 1));
+a_tiles.push(new place_thin_by_edge(a_tiles[1], 1));
+a_tiles.push(new place_fat_by_edge(a_tiles[2], 3));
+a_tiles.push(new place_thin_by_edge(a_tiles[3], 1));
+a_tiles.push(new place_thin_by_edge(a_tiles[4], 1));
+a_tiles.push(new place_fat_by_edge(a_tiles[5], 3));
+
+
+
+
+b_tiles[0] = new Fat_Tile(paper.view.center.x * 1.4, paper.view.center.y, 0);
 b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
 b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
 b_tiles.push(new place_thin_by_edge(b_tiles[2], 1));
+
+
+c_tiles[0] = new Thin_Tile(paper.view.center.x * 1, paper.view.center.y * 1.5, 0);
+c_tiles[1] = new Fat_Tile(paper.view.center.x * 1.5, paper.view.center.y * 1.75, 0);
+
+c_tiles.push(new place_fat_by_edge(c_tiles[0],2));
 
 // thin[1] = place_fat_by_edge(thin[0], 0);
 // thin[2] = place_fat_by_edge(thin[0], 1);
@@ -1033,11 +1285,18 @@ b_tiles.push(new place_thin_by_edge(b_tiles[2], 1));
 
 
 
-find_tiles_w_that_vertice(b_tiles[0].vert[2], b_tiles);
+// find_tiles_w_that_vertice(b_tiles[0].vert[2], b_tiles);
+find_tiles_w_that_vertice(a_tiles[0].vert[2], a_tiles);
 
-mark_edges(nearby_edges_as_vectors);
+
+
+// mark_edges(nearby_edges_as_vectors);
 // mark_tiles(nearby_tiles);
+
 get_unic_vec(nearby_edges_as_vectors);
+
+console.log(unique_edges_as_vectors, nearby_edges_as_vectors);
+plot_pattern(unique_edges_as_vectors, 0.8, 1);
 
 
 
@@ -1055,19 +1314,31 @@ get_unic_vec(nearby_edges_as_vectors);
 
 
 console.log('sort_check');
-plot_pattern(unique_edges_as_vectors, 0.2, 1);
-console.log(unique_edges_as_vectors);
-
 sort_vec(unique_edges_as_vectors);
 console.log(unique_edges_as_vectors);
 
-plot_pattern(unique_edges_as_vectors, 0.1, 1);
+// plot_pattern(nearby_edges_as_vectors, 0.8, 1);
+// plot_pattern(unique_edges_as_vectors, 0.8, 1);
 // plot_pattern(nearby_edges_as_vectors, 0.5, 1);
 
 
-// get_pattern(unique_edges_as_vectors);
-// console.log("unique_edges_as_vectors", unique_edges_as_vectors );
+is_it_allowed(unique_edges_as_vectors);
 
+
+
+
+
+// vec1 = [];
+// vec2 = [];
+// console.log('angle1', allowed_pattern[0][0].angle);
+// vec1 = rotate_and_match(unique_edges_as_vectors, allowed_pattern[0][0].angle);
+// plot_pattern(vec1, 1, 1.5);
+
+// console.log('angle2', allowed_pattern[0][1].angle);
+// vec2 = rotate_and_match(unique_edges_as_vectors, allowed_pattern[0][1].angle);
+// plot_pattern(vec2, 1.2, 1.5);
+
+// patterns_are_equal(vec2, 1);
 // var A = new Point(-50 * Math.cos(alpha), 0);
 // var B = new Point(0, 50 * Math.sin(alpha));
 // var C = new Point(50 * Math.cos(alpha), 0);
