@@ -19,10 +19,10 @@ var epsilon = 0.001;
 // ==============================================================================================================
 // >
 function Allowed_Pattens() {
-	var k=0;
+    var k = 0;
     allowed_pattern = [];
-    allowed_pattern[0] = ['>', '72', '>', '72', '>', '72', '>', '72', '>', '72'];
-    allowed_pattern[1] = [];
+
+
 
     points = [];
     points.push(new Point(50 * Math.cos(2 * alpha), 50 * Math.sin(2 * alpha)));
@@ -50,10 +50,10 @@ function Allowed_Pattens() {
     points.push(new Point(50, 0));
     points[0].kind = 'single_inward_arrow';
 
-    points.push(new Point(50 * Math.cos(-4 * alpha ), 50 * Math.sin(-4 * alpha )));
+    points.push(new Point(50 * Math.cos(-4 * alpha), 50 * Math.sin(-4 * alpha)));
     points[1].kind = 'single_inward_arrow';
 
-    points.push(new Point(50 * Math.cos(3*alpha ), 50 * Math.sin(3 * alpha)));
+    points.push(new Point(50 * Math.cos(3 * alpha), 50 * Math.sin(3 * alpha)));
     points[2].kind = 'double_outward_arrow';
 
 
@@ -83,7 +83,7 @@ function Allowed_Pattens() {
     points[5].kind = 'single_outward_arrow';
 
 
-    allowed_pattern[2] = points;
+    // allowed_pattern[2] = points;
 
 
 
@@ -92,37 +92,37 @@ function Allowed_Pattens() {
     points.push(new Point(50, 0));
     points[0].kind = 'single_outward_arrow';
 
-		k = - alpha;
+    k = -alpha;
     points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[1].kind = 'single_outward_arrow';
 
-		k = k - alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[2].kind = 'single_outward_arrow';
 
-		k = k - 2* alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - 2 * alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[3].kind = 'single_outward_arrow';
 
-		k = k - alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[4].kind = 'double_outward_arrow';
 
-		k = k - alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[5].kind = 'single_outward_arrow';
 
-		k = k - 2* alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - 2 * alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[5].kind = 'single_outward_arrow';
 
-		k = k - 2* alpha;
-		points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    k = k - 2 * alpha;
+    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
     points[5].kind = 'single_outward_arrow';
 
 
 
-    allowed_pattern[3] = points;
+    // allowed_pattern[3] = points;
 
 }
 
@@ -141,7 +141,7 @@ function Allowed_Pattens() {
 
 function Fat_Tile(x, y, rot) {
 
-    this.outer = true;
+    this.outer = false;
     this.rotation = rot;
     this.kind = 'fat';
 
@@ -176,13 +176,13 @@ function Fat_Tile(x, y, rot) {
     // this.C /0
 
     // var decoration_red = new Path.Arc(this.A + this.ab, this.A+[10,0], this.A - this.da);
-    var decoration_blue = new Path.Arc(this.vert[0] + this.ab / 3, this.vert[0] + this.ab / 4 + this.bc / 4, this.vert[0] - this.da / 3);
-    decoration_blue.strokeColor = 'blue';
-    decoration_blue.strokeWidth = '3';
+    this.decoration_blue = new Path.Arc(this.vert[0] + this.ab / 3, this.vert[0] + this.ab / 4 + this.bc / 4, this.vert[0] - this.da / 3);
+    this.decoration_blue.strokeColor = 'blue';
+    this.decoration_blue.strokeWidth = '3';
 
-    var decoration_red = new Path.Arc(this.vert[2] - this.bc * 3 / 4, this.vert[2] - (this.ab + this.bc) / (2 + 1 / 4), this.vert[2] + this.cd * 3 / 4);
-    decoration_red.strokeColor = 'red';
-    decoration_red.strokeWidth = '3';
+    this.decoration_red = new Path.Arc(this.vert[2] - this.bc * 3 / 4, this.vert[2] - (this.ab + this.bc) / (2 + 1 / 4), this.vert[2] + this.cd * 3 / 4);
+    this.decoration_red.strokeColor = 'red';
+    this.decoration_red.strokeWidth = '3';
 
     this.edge = [];
     this.edge[0] = new Path(this.vert[0], this.vert[0] + this.ab);
@@ -207,10 +207,10 @@ function Fat_Tile(x, y, rot) {
     this.edge[3].vec.kind = 'double_outward_arrow';
 
 
-    this.edge[0].outer = true;
-    this.edge[1].outer = true;
-    this.edge[2].outer = true;
-    this.edge[3].outer = true;
+    this.edge[0].outer = false;
+    this.edge[1].outer = false;
+    this.edge[2].outer = false;
+    this.edge[3].outer = false;
 
     // this.tile = new Path(this.vertices);
     // this.tile.fillColor = 'red';
@@ -255,7 +255,7 @@ function Fat_Tile(x, y, rot) {
 function Thin_Tile(x, y, rot) {
 
 
-    this.outer = true;
+    this.outer = false;
     this.rotation = rot;
     this.kind = 'thin';
 
@@ -290,13 +290,13 @@ function Thin_Tile(x, y, rot) {
     // this.C /0
 
     // var decoration_red = new Path.Arc(this.A + this.ab, this.A+[10,0], this.A - this.da);
-    var decoration_blue = new Path.Arc(this.vert[1] - this.ab / 3, this.vert[1] - this.ab / 4 + this.bc / 4, this.vert[1] + this.bc / 3);
-    decoration_blue.strokeColor = 'blue';
-    decoration_blue.strokeWidth = '3';
+    this.decoration_blue = new Path.Arc(this.vert[1] - this.ab / 3, this.vert[1] - this.ab / 4 + this.bc / 4, this.vert[1] + this.bc / 3);
+    this.decoration_blue.strokeColor = 'blue';
+    this.decoration_blue.strokeWidth = '3';
 
-    var decoration_red = new Path.Arc(this.vert[3] + this.da / 4, this.vert[3] + this.da / 4 - this.cd / 4, this.vert[3] - this.cd / 4);
-    decoration_red.strokeColor = 'red';
-    decoration_red.strokeWidth = '3';
+    this.decoration_red = new Path.Arc(this.vert[3] + this.da / 4, this.vert[3] + this.da / 4 - this.cd / 4, this.vert[3] - this.cd / 4);
+    this.decoration_red.strokeColor = 'red';
+    this.decoration_red.strokeWidth = '3';
 
     this.edge = [];
     this.edge[0] = new Path(this.vert[0], this.vert[0] + this.ab);
@@ -322,10 +322,10 @@ function Thin_Tile(x, y, rot) {
     this.edge[3].vec.kind = 'single_inward_arrow';
 
 
-    this.edge[0].outer = true;
-    this.edge[1].outer = true;
-    this.edge[2].outer = true;
-    this.edge[3].outer = true;
+    this.edge[0].outer = false;
+    this.edge[1].outer = false;
+    this.edge[2].outer = false;
+    this.edge[3].outer = false;
 
     // this.tile = new Path(this.vertices);
     // this.tile.fillColor = 'red';
@@ -383,6 +383,9 @@ function move_tile(tile, x, y) {
 //place xtile to edge number 'num' of tile:
 function place_fat_by_edge(tile, num) {
 
+    // tile.edge[num].outer = false;
+
+
     var case_need_to_rewrite = -1;
     var tempvec = new Point(0, 0);
     var centre = new Point(0, 0);
@@ -413,7 +416,7 @@ function place_fat_by_edge(tile, num) {
     // ==========================================================
     if (tile.kind == 'fat') {
 
-        console.log('fat');
+        // console.log('fat');
 
         if (tile.edge[num].vert == 'ab') {
             // console.log('we need to fit tile with da')
@@ -552,7 +555,7 @@ function place_fat_by_edge(tile, num) {
             centre = tile.vert[3] + (tile.da + tempvec) / 2;
             // tile.edge[3].strokeColor = 'pink';
 
-            ytile = new Fat_Tile(centre.x, centre.y, -18-18-36-36-18 + tile.rotation);
+            ytile = new Fat_Tile(centre.x, centre.y, -18 - 18 - 36 - 36 - 18 + tile.rotation);
         }
     }
 
@@ -577,6 +580,8 @@ function place_fat_by_edge(tile, num) {
 
 //place xtile to edge number 'num' of tile:
 function place_thin_by_edge(tile, num) {
+    // console.log('place_thin_tile.edge[num]',tile.edge[num]);
+    // tile.edge[num].outer = false;
 
     var case_need_to_rewrite = -1;
     var tempvec = new Point(0, 0);
@@ -638,8 +643,8 @@ function place_thin_by_edge(tile, num) {
         //CASE BC -- 1th case:
         if (case_need_to_rewrite == 1) {
             tempvec = tile.bc.rotate(144, [0, 0]);
-            var temp_vec_path = new Path(tile.vert[1], tile.vert[1] + tempvec);
-            temp_vec_path.strokeColor = 'green';
+            // var temp_vec_path = new Path(tile.vert[1], tile.vert[1] + tempvec);
+            // temp_vec_path.strokeColor = 'green';
             centre = tile.vert[1] + (tile.bc + tempvec) / 2;
             // tile.edge[1].strokeColor = 'pink';
 
@@ -760,7 +765,7 @@ function place_thin_by_edge(tile, num) {
 // =  =======    =  =======  =       ======  =======  =        =  ====  =  ====  =      ======  ====
 // =================================================================================================
 
-
+//nearby_edges_as_vectors also here
 function find_tiles_w_that_vertice(vertice, sometiles) {
     nearby_tiles = [];
 
@@ -824,7 +829,7 @@ function find_tiles_w_that_vertice(vertice, sometiles) {
     //         }
     //     }
     // }
-    console.log('count = ', count);
+    // console.log('count = ', count);
     var myCircle = new Path.Circle(vertice, 7);
     myCircle.strokeColor = 'green';
 
@@ -869,10 +874,11 @@ function mark_tiles(tiles) {
 function mark_edges(some_edges) {
 
     for (var i = 0; i < some_edges.length; i++) {
-        some_edges[i].strokeColor = 'green';
+        some_edges[i].strokeColor = 'purple';
         some_edges[i].strokeWidth = '4';
     }
 }
+
 
 
 
@@ -936,7 +942,7 @@ function is_collinear(vec1, vec2) {
 // ================================================================================================
 function get_unic_vec(vectors) {
     var epsilon = 0.001;
-		console.log('get_unic_vec');
+    // console.log('get_unic_vec');
     unique_edges_as_vectors = [];
     unique_edges_as_vectors[0] = nearby_edges_as_vectors[0];
 
@@ -1106,7 +1112,7 @@ function is_it_allowed(vec) {
     // console.log(vec);
     // console.log('arrows:');
     // for (var i = 0; i < vec.length; i++) {
-        // console.log(vec[i].kind);
+    // console.log(vec[i].kind);
     // }
 
 
@@ -1115,8 +1121,8 @@ function is_it_allowed(vec) {
     // console.log('qqq', vec[0].kind);
 
     for (i = 0; i < allowed_pattern.length; i++) {
-        console.log('max i', allowed_pattern.length);
-        console.log('############################>>>>>>>>> i', i);
+        // console.log('max i', allowed_pattern.length);
+        // console.log('############################>>>>>>>>> i', i);
         for (j = 0; j < allowed_pattern[i].length; j++) {
             // console.log('rotating, j', j);
             vec_temp = rotate_and_match(vec, allowed_pattern[i][j].angle);
@@ -1183,7 +1189,7 @@ function patterns_are_equal(vec, n) {
 
     // console.log(vec.length, count);
     if (count == vec.length) {
-        console.log('patterns_are_equal -- TRUE');
+        // console.log('patterns_are_equal -- TRUE');
         return 1;
 
     }
@@ -1212,6 +1218,119 @@ function vectors_are_equal(vec1, vec2) {
     }
 
 }
+//
+// ==============================================================================================================================
+// ==      ==        =        =======    ===  ====  =        =        =       ======        =       ===      ==        ==      ==
+// =   ==   =  ==========  =========  ==  ==  ====  ====  ====  =======  ====  =====  =======  ====  =   ==   =  =======  ====  =
+// =  ====  =  ==========  ========  ====  =  ====  ====  ====  =======  ====  =====  =======  ====  =  ====  =  =======  ====  =
+// =  =======  ==========  ========  ====  =  ====  ====  ====  =======  ===   =====  =======  ====  =  =======  ========  ======
+// =  =======      ======  ========  ====  =  ====  ====  ====      ===      =======      ===  ====  =  =======      ======  ====
+// =  ===   =  ==========  ========  ====  =  ====  ====  ====  =======  ====  =====  =======  ====  =  ===   =  ============  ==
+// =  ====  =  ==========  ========  ====  =  ====  ====  ====  =======  ====  =====  =======  ====  =  ====  =  =======  ====  =
+// =   ==   =  ==========  =========  ==  ==   ==   ====  ====  =======  ====  =====  =======  ====  =   ==   =  =======  ====  =
+// ==      ==        ====  ==========    ====      =====  ====        =  ====  =====        =       ===      ==        ==      ==
+// ==============================================================================================================================
+
+function get_outer_edges(tiles) {
+    outer_edges = [];
+    // console.log('tiles0.edge', tiles[0].edge);
+    // console.log('tiles0.edge', tiles[0].edge[3].outer);
+    for (var i = 0; i < tiles.length; i++) {
+        for (var j = 0; j < 4; j++) {
+            if (tiles[i].edge[j].outer === true) {
+                // console.log('tiles[i].edge[j].outer is true', i, j);
+                outer_edges.push(tiles[i].edge[j]);
+                outer_edges[outer_edges.length - 1].tilenum = i;
+                outer_edges[outer_edges.length - 1].edgenum = j;
+            }
+        }
+    }
+}
+
+//
+// ============================================
+// ===================================  =======
+// ===================================  =======
+// ============================  =====  =======
+// =    ===   ==    ==========    =  =  ==   ==
+// =  =  =     =  =  ==========  =====  =  =  =
+// =  =  =  =  =  =  ==========  ==  =  =     =
+// =    ==  =  =    ===========  ==  =  =  ====
+// =  ====  =  =  =============  ==  =  =  =  =
+// =  =====   ==  ====       ==   =  =  ==   ==
+// ============================================
+
+function pop_tile(tiles) {
+    tilenum = [tiles.length - 1];
+    for (var i = 0; i < 4; i++) {
+        tiles[tilenum].edge[i].remove();
+    }
+    tiles[tilenum].decoration_blue.remove();
+    tiles[tilenum].decoration_red.remove();
+    tiles.pop();
+}
+
+//
+// ==================================================================================
+// =    ==      ======    =        =======    ===  ====  =        =        =       ==
+// ==  ==  ====  ======  =====  =========  ==  ==  ====  ====  ====  =======  ====  =
+// ==  ==  ====  ======  =====  ========  ====  =  ====  ====  ====  =======  ====  =
+// ==  ===  ===========  =====  ========  ====  =  ====  ====  ====  =======  ===   =
+// ==  =====  =========  =====  ========  ====  =  ====  ====  ====      ===      ===
+// ==  =======  =======  =====  ========  ====  =  ====  ====  ====  =======  ====  =
+// ==  ==  ====  ======  =====  ========  ====  =  ====  ====  ====  =======  ====  =
+// ==  ==  ====  ======  =====  =========  ==  ==   ==   ====  ====  =======  ====  =
+// =    ==      ======    ====  ==========    ====      =====  ====        =  ====  =
+// ==================================================================================
+// ребро и множество тайлов
+// хотя можно просто искать в множестве outer_edges
+// если совпало с кем-нибудь, то говорим не outer
+// если нет, то пишем outer
+//
+function is_outer(edge, outer_edges) {
+
+    for (var i = 0; i < outer_edges.length; i++) {
+        if (edges_are_equal(outer_edges[i], edge)) {
+            console.log('IS IT OUTER -- false');
+            outer_edges[i].outer = false;
+            return 0;
+        }
+
+    }
+    console.log('IS IT OUTER -- TRUE');
+    edge.outer = true;
+    return 1;
+
+
+}
+//edges_are_equal
+function edges_are_equal(edge1, edge2) {
+    this.x1 = edge1.firstSegment.point.x;
+    this.y1 = edge1.firstSegment.point.y;
+
+    this.x2 = edge1.lastSegment.point.x;
+    this.y2 = edge1.lastSegment.point.y;
+
+    this.a1 = edge2.firstSegment.point.x;
+    this.b1 = edge2.firstSegment.point.y;
+
+    this.a2 = edge2.lastSegment.point.x;
+    this.b2 = edge2.lastSegment.point.y;
+
+    if ((this.x1 == this.a1) && (this.y1 == this.b1) && (this.x2 == this.a2) && (this.y2 == this.b2)) {
+        console.log('edges_are_equal -- true');
+        return 1;
+    }
+    if ((this.x1 == this.a2) && (this.y1 == this.b2) && (this.x2 == this.a1) && (this.y2 == this.b1)) {
+        console.log('edges_are_equal -- true');
+        return 1;
+    }
+
+    console.log('edges_are_equal -- false');
+    return 0;
+
+}
+
 
 // =====================================================================
 // =================  =====  ====  ====    =  =======  =================
@@ -1227,7 +1346,7 @@ function vectors_are_equal(vec1, vec2) {
 
 Allowed_Pattens();
 
-plot_pattern(allowed_pattern[3], 1, 0.5);
+plot_pattern(allowed_pattern[allowed_pattern.length - 1], 0.2, 0.2);
 // plot_pattern(allowed_pattern[1], 1.2, 0.5);
 
 
@@ -1237,139 +1356,161 @@ b_tiles = [];
 c_tiles = [];
 tile = [];
 thin = [];
-// tile[0].fat_tile.removeSegment(3)
+var outer_edges = [];
 
-// test_tile[2] = place_fat_by_edge(test_tile[0], 2);
-// test_tile[3]= place_fat_by_edge(test_tile[2], 2);
+// a_tiles[0] = new Fat_Tile(paper.view.center.x , paper.view.center.y, 0);
+// a_tiles.push(new place_thin_by_edge(a_tiles[0], 1));
+// a_tiles.push(new place_thin_by_edge(a_tiles[1], 1));
+// a_tiles.push(new place_fat_by_edge(a_tiles[2], 3));
+// a_tiles.push(new place_thin_by_edge(a_tiles[3], 1));
+// a_tiles.push(new place_thin_by_edge(a_tiles[4], 1));
+// a_tiles.push(new place_fat_by_edge(a_tiles[5], 3));
+// a_tiles.push(new place_fat_by_edge(a_tiles[6], 3));
 
-// test.tile[2].mark();
 
-// for (var i = 0; i < 4; i++) {
-//     test_tile[2].edge[i].strokeColor = 'pink';
-//     test_tile[2].edge[i].strokeWidth = '7';
+
+
+b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+b_tiles[0].edge[0].outer = true;
+b_tiles[0].edge[2].outer = true;
+b_tiles[0].edge[3].outer = true;
+b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
+b_tiles[1].edge[0].outer = true;
+b_tiles[1].edge[3].outer = true;
+b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
+b_tiles[2].edge[0].outer = true;
+b_tiles[2].edge[1].outer = true;
+b_tiles[2].edge[3].outer = true;
+
+// b_tiles.push(new place_thin_by_edge(b_tiles[2], 1));
+
+
+// c_tiles[0] = new Thin_Tile(paper.view.center.x * 1, paper.view.center.y * 1.5, 0);
+// c_tiles[1] = new Fat_Tile(paper.view.center.x * 1.5, paper.view.center.y * 1.75, 0);
+// c_tiles.push(new place_fat_by_edge(c_tiles[0],2));
+
+// #############################################################################################################
+// #############################################################################################################
+// #############################################################################################################
+function is_it_forced(edge, tiles) {
+    tiles.push(new place_fat_by_edge(tiles[edge.tilenum], edge.edgenum));
+    find_tiles_w_that_vertice(edge.firstSegment.point, b_tiles);
+    get_unic_vec(nearby_edges_as_vectors);
+    plot_pattern(unique_edges_as_vectors, 0.2, 1.5);
+    if (is_it_allowed(unique_edges_as_vectors)) {
+        return -666;
+
+    } else {
+        pop_tile(tiles);
+    }
+
+    return -666;
+}
+// #############################################################################################################
+// #############################################################################################################
+// #############################################################################################################
+get_outer_edges(b_tiles);
+console.log("outer_edges", outer_edges);
+
+// function mark_edges(edges)
+// for (var i = 0; i < edges.length; i++) {
+//     edges[i].strokeColor = 'purple';
 // }
 
-
-a_tiles[0] = new Fat_Tile(paper.view.center.x * 1.7, paper.view.center.y, 0);
-a_tiles.push(new place_thin_by_edge(a_tiles[0], 1));
-a_tiles.push(new place_thin_by_edge(a_tiles[1], 1));
-a_tiles.push(new place_fat_by_edge(a_tiles[2], 3));
-a_tiles.push(new place_thin_by_edge(a_tiles[3], 1));
-a_tiles.push(new place_thin_by_edge(a_tiles[4], 1));
-a_tiles.push(new place_fat_by_edge(a_tiles[5], 3));
-
-
-
-
-b_tiles[0] = new Fat_Tile(paper.view.center.x * 1.4, paper.view.center.y, 0);
-b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
-b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
-b_tiles.push(new place_thin_by_edge(b_tiles[2], 1));
-
-
-c_tiles[0] = new Thin_Tile(paper.view.center.x * 1, paper.view.center.y * 1.5, 0);
-c_tiles[1] = new Fat_Tile(paper.view.center.x * 1.5, paper.view.center.y * 1.75, 0);
-
-c_tiles.push(new place_fat_by_edge(c_tiles[0],2));
-
-// thin[1] = place_fat_by_edge(thin[0], 0);
-// thin[2] = place_fat_by_edge(thin[0], 1);
-// thin[3] = place_fat_by_edge(thin[0], 2);
-// thin[4] = place_fat_by_edge(thin[0], 3);
-
-// thin[0]= new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
-// thin[1] = place_thin_by_edge(thin[0], 0);
-// thin[1] = place_thin_by_edge(thin[0], 1);
-// thin[1] = place_thin_by_edge(thin[0], 2);
-// thin[1] = place_thin_by_edge(thin[0], 3);
-
-
-
+// find_tiles_w_that_vertice(a_tiles[0].vert[2], a_tiles);
 // find_tiles_w_that_vertice(b_tiles[0].vert[2], b_tiles);
-find_tiles_w_that_vertice(a_tiles[0].vert[2], a_tiles);
+//
+var rand = Math.floor((Math.random() * outer_edges.length));
+
+get_outer_edges(b_tiles);
+
+// -------- поставить тайл и обновить outer_edges:
+b_tiles.push(new place_fat_by_edge(b_tiles[outer_edges[rand].tilenum], outer_edges[rand].edgenum));
+
+// важная строчка, что не дело
 
 
+
+// для всех ребер нового тайла обновить outer
+update_outer_propery_4_new_tile(b_tiles[b_tiles.length-1], outer_edges);
+// for (var i = 0; i < 4; i++) {
+//     if (is_outer(b_tiles[b_tiles.length - 1].edge[i], outer_edges) === 1) {
+//         // b_tiles[b_tiles.length - 1].edge[i].outer = true;
+//         // outer_edges.push(b_tiles[b_tiles.length-1].edge[i]);
+//     }
+// }
+
+// b_tiles[outer_edges[rand].tilenum].edge[outer_edges[rand].edgenum].outer = false;
+get_outer_edges(b_tiles);
+
+find_tiles_w_that_vertice(b_tiles[2].edge[1].firstSegment.point, b_tiles);
+
+
+find_tiles_w_that_vertice(b_tiles[2].edge[1].lastSegment.point, b_tiles);
+
+mark_edges(outer_edges);
+
+// -------- кул
+
+function update_outer_propery_4_new_tile(tile, outer_edges) {
+
+    for (var i = 0; i < 4; i++) {
+        is_outer(tile.edge[i], outer_edges);
+        // b_tiles[b_tiles.length - 1].edge[i].outer = true;
+        // outer_edges.push(b_tiles[b_tiles.length-1].edge[i]);
+
+    }
+
+}
+
+
+// дальше
+
+// случайно выбираем ребро на границе
+// ну или цикл
+//
+// for (var i = 0; i < outer_edges.length; i++) {
+// 	if(is_it_forced_check(outer_edges[i])>0){
+//
+// }
+// }
+// для данного ребра проверяем тип, пока только является ли он типа forced
+// 	если является, то поставить подходящий тайл
+// 	подровнять outer_edges
+// если нет,
+//
+//
+
+// outer_edges[rand].strokeColor = 'FUCHSIA';
+// console.log('is it forced', is_it_forced(outer_edges[rand], b_tiles));
+// var k =0;
+// while (k<20) {
+// 	rand = Math.floor((Math.random() * outer_edges.length));
+// 	console.log('is it forced', is_it_forced(outer_edges[rand], b_tiles));
+//
+// 	k++;
+// }
+// console.log(b_tiles);
+// pop_tile([b_tiles.length-1], b_tiles);
+// console.log(b_tiles);
 
 // mark_edges(nearby_edges_as_vectors);
 // mark_tiles(nearby_tiles);
 
-get_unic_vec(nearby_edges_as_vectors);
+// get_unic_vec(nearby_edges_as_vectors);
 
-console.log(unique_edges_as_vectors, nearby_edges_as_vectors);
-plot_pattern(unique_edges_as_vectors, 0.8, 1);
-
-
-
-// console.log(unique_edges_as_vectors[0].angleInRadians);
-
-// var temp = unique_edges_as_vectors[0];
-// unique_edges_as_vectors[0]=unique_edges_as_vectors[1];
-// unique_edges_as_vectors[1]=temp;
-
-// console.log(unique_edges_as_vectors[0].angle);
-// console.log(unique_edges_as_vectors[1].angle);
-// console.log(unique_edges_as_vectors[2].angle);
-// console.log(unique_edges_as_vectors[3].angle);
-// console.log(unique_edges_as_vectors[4].angle);
-
-
-console.log('sort_check');
-sort_vec(unique_edges_as_vectors);
-console.log(unique_edges_as_vectors);
-
-// plot_pattern(nearby_edges_as_vectors, 0.8, 1);
-// plot_pattern(unique_edges_as_vectors, 0.8, 1);
-// plot_pattern(nearby_edges_as_vectors, 0.5, 1);
-
-
-is_it_allowed(unique_edges_as_vectors);
+// console.log(unique_edges_as_vectors, nearby_edges_as_vectors);
+// plot_pattern(unique_edges_as_vectors, 0.2, 1.5);
 
 
 
+// console.log('sort_check');
+// sort_vec(unique_edges_as_vectors);
+// console.log(unique_edges_as_vectors);
+
+// is_it_allowed(unique_edges_as_vectors);
 
 
-// vec1 = [];
-// vec2 = [];
-// console.log('angle1', allowed_pattern[0][0].angle);
-// vec1 = rotate_and_match(unique_edges_as_vectors, allowed_pattern[0][0].angle);
-// plot_pattern(vec1, 1, 1.5);
-
-// console.log('angle2', allowed_pattern[0][1].angle);
-// vec2 = rotate_and_match(unique_edges_as_vectors, allowed_pattern[0][1].angle);
-// plot_pattern(vec2, 1.2, 1.5);
-
-// patterns_are_equal(vec2, 1);
-// var A = new Point(-50 * Math.cos(alpha), 0);
-// var B = new Point(0, 50 * Math.sin(alpha));
-// var C = new Point(50 * Math.cos(alpha), 0);
-// var D = new Point(0, -50 * Math.sin(alpha));
-
-// A +=[200,200];
-// B +=[200,200];
-// C +=[200,200];
-// D +=[200,200];
-//
-// var myCircleA = new Path.Circle(A, 20);
-// myCircleA.fillColor = 'black';
-// var myCircleB = new Path.Circle(B, 20);
-// myCircleB.fillColor = 'blue';
-// var myCircleC = new Path.Circle(C, 20);
-// myCircleC.fillColor = 'black';
-// var myCircleD = new Path.Circle(D, 20);
-// myCircleD.fillColor = 'black';
-
-
-// ######################################################################
-
-// for (j = 0; j < tile.length; j++) {
-//
-// }
-// for (j = 0; j < outer_edges.length; j++) {
-//
-// }
-// while (var stop != true){
-// 	outer_edges[i].
-// }
 
 // #############################################################################################################
 // #############################################################################################################
@@ -1382,27 +1523,5 @@ is_it_allowed(unique_edges_as_vectors);
 // #############################################################################################################
 // #############################################################################################################
 
-//
-// for (var key in test_tile[0]) {
-//     // этот код будет вызван для каждого свойства объекта
-//     // ..и выведет имя свойства и его значение
-//     console.log("Ключ: " + key + " значение: " + test_tile[0][key]);
-// }
-
-// tool.onKeyDown = function(event) {
-//     if (event.key == 'space') {
-//         // Scale the path by 110%:
-//         tile[i] = new Fat_Tile(100 * i, 100);
-//         i++;
-//     }
-//     if (event.key == 'down') {
-//         // Scale the path by 110%:
-//         tile[i] = new Thin_Tile(100 * i, 100);
-//         i++;
-//
-//         // Prevent the key event from bubbling
-//         return false;
-//     }
-// }
 
 console.log('end');
