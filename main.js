@@ -1192,7 +1192,8 @@ function plot_pattern(vectors, x, y) {
     // console.log(center);
 
 
-
+// single arrow - red
+// double arrow - blue
     for (var i = 0; i < vectors.length; i++) {
         pattern_plot[i] = new Path(center, center + vectors[i]);
 
@@ -1203,16 +1204,19 @@ function plot_pattern(vectors, x, y) {
         // console.log('pattern_plot kind');
         // console.log(pattern_plot.kind);
         if (vectors[i].kind == 'single_outward_arrow') {
-            pattern_plot[i].strokeColor = 'red';
+            pattern_plot[i].strokeColor = 'Brown 	';
         }
-        if (vectors[i].kind == 'double_outward_arrow') {
-            pattern_plot[i].strokeColor = 'purlpe';
-        }
+
         if (vectors[i].kind == 'single_inward_arrow') {
-            pattern_plot[i].strokeColor = 'yellow';
+            pattern_plot[i].strokeColor = 'Tomato 	';
         }
+
+				if (vectors[i].kind == 'double_outward_arrow') {
+            pattern_plot[i].strokeColor = 'DarkBlue';
+        }
+
         if (vectors[i].kind == 'double_inward_arrow') {
-            pattern_plot[i].strokeColor = 'blue';
+            pattern_plot[i].strokeColor = 'SkyBlue 	';
         }
 
     }
@@ -1246,6 +1250,18 @@ function sort_vec(vectors) {
 
 }
 
+// ================================================================
+// =       ==        =  ====  =        =       ===      ==        =
+// =  ====  =  =======  ====  =  =======  ====  =  ====  =  =======
+// =  ====  =  =======  ====  =  =======  ====  =  ====  =  =======
+// =  ===   =  =======  ====  =  =======  ===   ==  ======  =======
+// =      ===      ===   ==   =      ===      ======  ====      ===
+// =  ====  =  ========  ==  ==  =======  ====  ======  ==  =======
+// =  ====  =  ========  ==  ==  =======  ====  =  ====  =  =======
+// =  ====  =  =========    ===  =======  ====  =  ====  =  =======
+// =  ====  =        ====  ====        =  ====  ==      ==        =
+// ================================================================
+
 
 function reverse_vec(vector) {
     if (vector.kind == 'single_outward_arrow') {
@@ -1268,7 +1284,7 @@ function reverse_vec(vector) {
     }
     if (vector.kind == 'double_inward_arrow') {
         vector = vector * (-1);
-        vector.kind = 'double_inward_arrow';
+        vector.kind = 'double_outward_arrow';
         return vector;
 
     }
