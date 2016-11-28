@@ -161,11 +161,11 @@ function onKeyDown(event) {
 
 		 b_tiles[1].edge[2].outer = true;
 		 b_tiles[1].edge[3].outer = true;
-		 b_tiles[2].edge[3].outer = true;
+		 b_tiles[2].edge[1].outer = true;
 
 		 b_tiles.push(new place_thin_by_edge(b_tiles[2],0));
 
-		 b_tiles[3].edge[2].outer = true;
+		 b_tiles[3].edge[0].outer = true;
 
 
 			get_outer_edges(b_tiles);
