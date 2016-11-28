@@ -1,17 +1,41 @@
 var alpha = Math.PI / 5;
 
-var side = 50;
+var side = 35;
 var i = 0;
 var j = 0;
 var epsilon = 0.001;
-
+var show_decor = 1;
 
 function onKeyDown(event) {
+    if (event.key == 'up') {
+        view.translate([0, 50]);
+    }
+
+    if (event.key == 'down') {
+        view.translate([0, -50]);
+    }
+    if (event.key == 'left') {
+        view.translate([50, 0]);
+    }
+    if (event.key == 'right') {
+        view.translate([-50, 0]);
+    }
     if (event.key == 'c') {
         remove_marks();
     }
+    if (event.key == 'd') {
+        pop_tile(b_tiles);
+    }
     if (event.key == 'x') {
         remove_all_marks();
+    }
+    if (event.key == 'h') {
+        remove_all_marks();
+				for(var i=0; i<b_tiles.length; i++){
+					b_tiles[i].decoration_red.visible = false;
+					// b_tiles[i].decoration_red.strokeColor = 'green';
+					b_tiles[i].decoration_blue.visible = false;
+				}
     }
     if (event.key == 'm') {
         mark_edges(outer_edges);
@@ -19,9 +43,138 @@ function onKeyDown(event) {
     if (event.key == 'a') {
         add_random_tile(b_tiles);
     }
+    if (event.key == 'n') {
+			var i =0;
+        while ( i < 200) {
+						i++;
+						add_random_tile_2(b_tiles);
+        }
+    }
+    if (event.key == 'b') {
+			var i =0;
+        while ( i < 50) {
+						i++;
+						add_random_tile_2(b_tiles);
+        }
+    }
+    if (event.key == 'v') {
+						add_random_tile_2(b_tiles);
+    }
+
+		if(event.key == '1'){
+			 b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+			b_tiles.push(new place_fat_by_edge(b_tiles[0], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[0], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[2], 0));
+			b_tiles[1].edge[2].outer = true;
+			b_tiles[1].edge[3].outer = true;
+			b_tiles[2].edge[1].outer = true;
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+			b_tiles[b_tiles.length-3].edge[2].outer = true;
+			b_tiles[b_tiles.length-3].edge[3].outer = true;
+			b_tiles[b_tiles.length-2].edge[1].outer = true;
+
+			b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+			b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+			b_tiles[b_tiles.length-2].edge[2].outer = true;
+			b_tiles[b_tiles.length-2].edge[3].outer = true;
+			b_tiles[b_tiles.length-1].edge[1].outer = true;
+
+			get_outer_edges(b_tiles);
+
+
+
+		}
+
+		if(event.key == '2'){
+			b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+			b_tiles[0].edge[0].outer = true;
+			b_tiles[0].edge[2].outer = true;
+			b_tiles[0].edge[3].outer = true;
+			b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
+			b_tiles[1].edge[0].outer = true;
+			b_tiles[1].edge[3].outer = true;
+			b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
+			b_tiles[2].edge[0].outer = true;
+			b_tiles[2].edge[1].outer = true;
+			b_tiles[2].edge[3].outer = true;
+
+			get_outer_edges(b_tiles);
+
+		}
+
+		if(event.key == '3'){
+			b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+		 b_tiles.push(new place_fat_by_edge(b_tiles[0], 3));
+		 b_tiles.push(new place_thin_by_edge(b_tiles[0], 2));
+
+		 b_tiles[1].edge[2].outer = true;
+		 b_tiles[1].edge[3].outer = true;
+		 b_tiles[2].edge[3].outer = true;
+
+		 b_tiles.push(new place_thin_by_edge(b_tiles[2],0));
+
+		 b_tiles[3].edge[2].outer = true;
+
+
+			get_outer_edges(b_tiles);
+
+		}
 }
 
 //add random tile to the given set of tiles
+//return number of chosen outer edge
 function add_random_tile(tiles) {
     var temp = 0;
     temp = Math.floor((Math.random() * 2)); //randomly choose tile type
@@ -35,24 +188,171 @@ function add_random_tile(tiles) {
         console.log('fat chosen');
         tiles.push(new place_fat_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
         // tiles.push(new place_fat_by_edge(tiles[1], 3));
-        remove_marks();
-        update_outer_propery_4_new_tile(tiles[tiles.length - 1], outer_edges);
-        get_outer_edges(tiles);
-        mark_edges(outer_edges);
-        return temp;
+
+        if ((is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) && (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))) {
+
+
+
+            remove_marks();
+            update_outer_propery_4_new_tile(tiles[tiles.length - 1], outer_edges);
+            get_outer_edges(tiles);
+            // mark_edges(outer_edges);
+            return temp;
+        } else {
+            pop_tile(tiles);
+        }
     } else {
 
         temp = Math.floor((Math.random() * outer_edges.length));
         console.log('thin chosen');
         tiles.push(new place_thin_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
-        // tiles.push(new place_fat_by_edge(tiles[1], 3));
-        remove_marks();
+
+
+
+        if ((is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) && (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))) {
+
+
+
+            remove_marks();
+            update_outer_propery_4_new_tile(tiles[tiles.length - 1], outer_edges);
+            get_outer_edges(tiles);
+            // mark_edges(outer_edges);
+            return temp;
+        } else {
+            pop_tile(tiles);
+        }
+    }
+
+    if (
+
+
+        (is_overlap(tiles[tiles.length - 1], tiles) === 0)
+    ) {
+        console.log('ooverlap');
+    }
+
+}
+
+//add random tile to the given set of tiles
+//return number of chosen outer edge
+edge = new Path([0, 0]);
+
+//################################################################################################
+//################################################################################################
+//################################################################################################
+//################################################################################################
+//################################################################################################
+
+function add_random_tile_2(tiles) {
+
+    console.log('>>>>>>add rand 2 ...');
+    edge.strokeColor = 'black';
+    edge.strokeWidth = '2';
+    // edge.remove();
+    var temp = 0;
+    var i = 0;
+    this.fat = 0;
+    this.this = 0;
+
+
+    temp = Math.floor((Math.random() * outer_edges.length));
+
+    tiles.push(new place_fat_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
+    // tiles.push(new place_fat_by_edge(tiles[1], 3));
+
+    if (
+        (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+				(is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+        (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+				(is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+
+        // (is_overlap(tiles[tiles.length - 1], tiles) === 0)
+    ) {
+        this.fat = 1;
+        console.log('fat is good');
+        pop_tile(tiles);
+
+    } else {
+        console.log('fat was bad, so thin is good');
+
+        pop_tile(tiles);
+        tiles.push(new place_thin_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
+
+        edge = outer_edges[temp];
+        edge.strokeColor = 'green';
+        edge.strokeWidth = '5';
+
+        // remove_marks();
         update_outer_propery_4_new_tile(tiles[tiles.length - 1], outer_edges);
         get_outer_edges(tiles);
-        mark_edges(outer_edges);
+        // mark_edges(outer_edges);
+
+
+
+
         return temp;
     }
 
+
+    tiles.push(new place_thin_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
+
+
+
+    if (
+        (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+				(is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+        (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+				(is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+
+        // (is_overlap(tiles[tiles.length - 1], tiles) === 0)
+    ) {
+
+        this.thin = 1;
+
+        console.log('thin is good');
+
+        pop_tile(tiles);
+
+
+
+
+
+        edge = outer_edges[temp];
+        edge.strokeColor = 'green';
+        edge.strokeWidth = '5';
+
+    } else {
+        pop_tile(tiles);
+        tiles.push(new place_fat_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
+
+
+        edge = outer_edges[temp];
+        edge.strokeColor = 'green';
+        edge.strokeWidth = '5';
+
+        // remove_marks();
+        update_outer_propery_4_new_tile(tiles[tiles.length - 1], outer_edges);
+        get_outer_edges(tiles);
+        // mark_edges(outer_edges);
+
+
+        return temp;
+    }
+
+
+    if ((this.a === 0) && (this.b === 0)) {
+        // plot_pattern(unique_edges_as_vectors, 1.7, 1.3);
+        console.log('place2 shit');
+    }
+
+    if ((this.thin === 1) && (this.fat === 1)) {
+        // plot_pattern(unique_edges_as_vectors, 1.7, 1.3);
+        console.log('place2 ...');
+    }
+
+    edge = outer_edges[temp];
+    edge.strokeColor = 'green';
+    edge.strokeWidth = '5';
 }
 
 // ==============================================================================================================
@@ -74,19 +374,19 @@ function Allowed_Pattens() {
 
 
     points = [];
-    points.push(new Point(50 * Math.cos(2 * alpha), 50 * Math.sin(2 * alpha)));
+    points.push(new Point(side * Math.cos(2 * alpha), side * Math.sin(2 * alpha)));
     points[0].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 2), 50 * Math.sin(2 * alpha * 2)));
+    points.push(new Point(side * Math.cos(2 * alpha * 2), side * Math.sin(2 * alpha * 2)));
     points[1].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 3), 50 * Math.sin(2 * alpha * 3)));
+    points.push(new Point(side * Math.cos(2 * alpha * 3), side * Math.sin(2 * alpha * 3)));
     points[2].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 4), 50 * Math.sin(2 * alpha * 4)));
+    points.push(new Point(side * Math.cos(2 * alpha * 4), side * Math.sin(2 * alpha * 4)));
     points[3].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 5), 50 * Math.sin(2 * alpha * 5)));
+    points.push(new Point(side * Math.cos(2 * alpha * 5), side * Math.sin(2 * alpha * 5)));
     points[4].kind = 'single_outward_arrow';
 
 
@@ -96,13 +396,13 @@ function Allowed_Pattens() {
 
 
     points = [];
-    points.push(new Point(50, 0));
+    points.push(new Point(side, 0));
     points[0].kind = 'single_inward_arrow';
 
-    points.push(new Point(50 * Math.cos(-4 * alpha), 50 * Math.sin(-4 * alpha)));
+    points.push(new Point(side * Math.cos(-4 * alpha), side * Math.sin(-4 * alpha)));
     points[1].kind = 'single_inward_arrow';
 
-    points.push(new Point(50 * Math.cos(3 * alpha), 50 * Math.sin(3 * alpha)));
+    points.push(new Point(side * Math.cos(3 * alpha), side * Math.sin(3 * alpha)));
     points[2].kind = 'double_outward_arrow';
 
 
@@ -113,22 +413,22 @@ function Allowed_Pattens() {
 
 
     points = [];
-    points.push(new Point(50 * Math.cos(2 * alpha), 50 * Math.sin(2 * alpha)));
+    points.push(new Point(side * Math.cos(2 * alpha), side * Math.sin(2 * alpha)));
     points[0].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 2), 50 * Math.sin(2 * alpha * 2)));
+    points.push(new Point(side * Math.cos(2 * alpha * 2), side * Math.sin(2 * alpha * 2)));
     points[1].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 3), 50 * Math.sin(2 * alpha * 3)));
+    points.push(new Point(side * Math.cos(2 * alpha * 3), side * Math.sin(2 * alpha * 3)));
     points[2].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 4), 50 * Math.sin(2 * alpha * 4)));
+    points.push(new Point(side * Math.cos(2 * alpha * 4), side * Math.sin(2 * alpha * 4)));
     points[3].kind = 'single_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(alpha * 9), 50 * Math.sin(alpha * 9)));
+    points.push(new Point(side * Math.cos(alpha * 9), side * Math.sin(alpha * 9)));
     points[4].kind = 'double_outward_arrow';
 
-    points.push(new Point(50 * Math.cos(2 * alpha * 5), 50 * Math.sin(2 * alpha * 5)));
+    points.push(new Point(side * Math.cos(2 * alpha * 5), side * Math.sin(2 * alpha * 5)));
     points[5].kind = 'single_outward_arrow';
 
 
@@ -138,35 +438,35 @@ function Allowed_Pattens() {
 
 
     points = [];
-    points.push(new Point(50, 0));
+    points.push(new Point(side, 0));
     points[0].kind = 'single_outward_arrow';
 
     k = -alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[1].kind = 'double_outward_arrow';
 
     k = k - alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[2].kind = 'single_outward_arrow';
 
     k = k - 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[3].kind = 'single_outward_arrow';
 
     k = k - alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[4].kind = 'double_outward_arrow';
 
     k = k - alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[5].kind = 'single_outward_arrow';
 
     k = k - 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[6].kind = 'single_outward_arrow';
 
     k = k - 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[7].kind = 'single_outward_arrow';
 
 
@@ -180,23 +480,23 @@ function Allowed_Pattens() {
 
 
     k = -alpha / 2;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[0].kind = 'double_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'double_outward_arrow';
 
     k -= 3 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_inward_arrow';
 
 
@@ -209,23 +509,23 @@ function Allowed_Pattens() {
 
 
     k = -alpha / 2;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[0].kind = 'double_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'double_outward_arrow';
 
     k -= 3 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_inward_arrow';
 
 
@@ -238,23 +538,23 @@ function Allowed_Pattens() {
 
 
     k = -alpha / 2;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[0].kind = 'double_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'double_outward_arrow';
 
     k -= 3 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_inward_arrow';
 
 
@@ -267,23 +567,23 @@ function Allowed_Pattens() {
 
 
     k = -alpha / 2;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[0].kind = 'double_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= 2 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_outward_arrow';
 
     k -= alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'double_outward_arrow';
 
     k -= 3 * alpha;
-    points.push(new Point(50 * Math.cos(k), 50 * Math.sin(k)));
+    points.push(new Point(side * Math.cos(k), side * Math.sin(k)));
     points[points.length - 1].kind = 'single_inward_arrow';
 
     allowed_pattern[6] = points;
@@ -293,24 +593,24 @@ function Allowed_Pattens() {
 
 
 
-		points = [];
-		points.push(new Point(50 * Math.cos(2 * alpha), 50 * Math.sin(2 * alpha)));
-		points[0].kind = 'double_inward_arrow';
+    points = [];
+    points.push(new Point(side * Math.cos(2 * alpha), side * Math.sin(2 * alpha)));
+    points[0].kind = 'double_inward_arrow';
 
-		points.push(new Point(50 * Math.cos(2 * alpha * 2), 50 * Math.sin(2 * alpha * 2)));
-		points[1].kind = 'double_inward_arrow';
+    points.push(new Point(side * Math.cos(2 * alpha * 2), side * Math.sin(2 * alpha * 2)));
+    points[1].kind = 'double_inward_arrow';
 
-		points.push(new Point(50 * Math.cos(2 * alpha * 3), 50 * Math.sin(2 * alpha * 3)));
-		points[2].kind = 'double_inward_arrow';
+    points.push(new Point(side * Math.cos(2 * alpha * 3), side * Math.sin(2 * alpha * 3)));
+    points[2].kind = 'double_inward_arrow';
 
-		points.push(new Point(50 * Math.cos(2 * alpha * 4), 50 * Math.sin(2 * alpha * 4)));
-		points[3].kind = 'double_inward_arrow';
+    points.push(new Point(side * Math.cos(2 * alpha * 4), side * Math.sin(2 * alpha * 4)));
+    points[3].kind = 'double_inward_arrow';
 
-		points.push(new Point(50 * Math.cos(2 * alpha * 5), 50 * Math.sin(2 * alpha * 5)));
-		points[4].kind = 'double_inward_arrow';
+    points.push(new Point(side * Math.cos(2 * alpha * 5), side * Math.sin(2 * alpha * 5)));
+    points[4].kind = 'double_inward_arrow';
 
 
-		allowed_pattern[7] = points;
+    allowed_pattern[7] = points;
 
 }
 
@@ -333,10 +633,10 @@ function Fat_Tile(x, y, rot) {
     this.rotation = rot;
     this.kind = 'fat';
 
-    this.A = new Point(-50 * Math.cos(alpha), 0);
-    this.B = new Point(0, 50 * Math.sin(alpha));
-    this.C = new Point(50 * Math.cos(alpha), 0);
-    this.D = new Point(0, -50 * Math.sin(alpha));
+    this.A = new Point(-side * Math.cos(alpha), 0);
+    this.B = new Point(0, side * Math.sin(alpha));
+    this.C = new Point(side * Math.cos(alpha), 0);
+    this.D = new Point(0, -side * Math.sin(alpha));
 
     this.vert = [];
     this.vert[0] = this.A;
@@ -352,10 +652,10 @@ function Fat_Tile(x, y, rot) {
     }
 
 
-    // this.ab = [new Point(-50 * Math.cos(alpha), 0), new Point(0, 50 * Math.sin(alpha))];
-    // this.bc = [new Point(0, 50 * Math.sin(alpha)), new Point(50 * Math.cos(alpha), 0)];
-    // this.cd = [new Point(50 * Math.cos(alpha), 0), new Point(0, -50 * Math.sin(alpha))];
-    // this.da = [new Point(0, -50 * Math.sin(alpha)), new Point(-50 * Math.cos(alpha), 0)];
+    // this.ab = [new Point(-side * Math.cos(alpha), 0), new Point(0, side * Math.sin(alpha))];
+    // this.bc = [new Point(0, side * Math.sin(alpha)), new Point(side * Math.cos(alpha), 0)];
+    // this.cd = [new Point(side * Math.cos(alpha), 0), new Point(0, -side * Math.sin(alpha))];
+    // this.da = [new Point(0, -side * Math.sin(alpha)), new Point(-side * Math.cos(alpha), 0)];
 
     this.ab = this.vert[1] - this.vert[0];
     this.bc = this.vert[2] - this.vert[1];
@@ -447,10 +747,10 @@ function Thin_Tile(x, y, rot) {
     this.rotation = rot;
     this.kind = 'thin';
 
-    this.A = new Point(-50 * Math.cos(alpha / 2), 0);
-    this.B = new Point(0, 50 * Math.sin(alpha / 2));
-    this.C = new Point(50 * Math.cos(alpha / 2), 0);
-    this.D = new Point(0, -50 * Math.sin(alpha / 2));
+    this.A = new Point(-side * Math.cos(alpha / 2), 0);
+    this.B = new Point(0, side * Math.sin(alpha / 2));
+    this.C = new Point(side * Math.cos(alpha / 2), 0);
+    this.D = new Point(0, -side * Math.sin(alpha / 2));
 
     this.vert = [];
     this.vert[0] = this.A;
@@ -466,10 +766,10 @@ function Thin_Tile(x, y, rot) {
     }
 
 
-    // this.ab = [new Point(-50 * Math.cos(alpha), 0), new Point(0, 50 * Math.sin(alpha))];
-    // this.bc = [new Point(0, 50 * Math.sin(alpha)), new Point(50 * Math.cos(alpha), 0)];
-    // this.cd = [new Point(50 * Math.cos(alpha), 0), new Point(0, -50 * Math.sin(alpha))];
-    // this.da = [new Point(0, -50 * Math.sin(alpha)), new Point(-50 * Math.cos(alpha), 0)];
+    // this.ab = [new Point(-side * Math.cos(alpha), 0), new Point(0, side * Math.sin(alpha))];
+    // this.bc = [new Point(0, side * Math.sin(alpha)), new Point(side * Math.cos(alpha), 0)];
+    // this.cd = [new Point(side * Math.cos(alpha), 0), new Point(0, -side * Math.sin(alpha))];
+    // this.da = [new Point(0, -side * Math.sin(alpha)), new Point(-side * Math.cos(alpha), 0)];
 
     this.ab = this.vert[1] - this.vert[0];
     this.bc = this.vert[2] - this.vert[1];
@@ -764,7 +1064,7 @@ function place_fat_by_edge(tile, num) {
 
 //place xtile to edge number 'num' of tile:
 function place_thin_by_edge(tile, num) {
-    // console.log('place_thin_tile.edge[num]',tile.edge[num]);
+
     // tile.edge[num].outer = false;
 
     var case_need_to_rewrite = -1;
@@ -946,14 +1246,16 @@ function place_thin_by_edge(tile, num) {
 // =  ========  ==  ======   =  ====  =====  ======   =  =======  ====  =  ====  =  ===  =====  ====
 // =  =======    =  =======  =       ======  =======  =        =  ====  =  ====  =      ======  ====
 // =================================================================================================
+// var myCircle = new Path.Circle([0,0], 7);
 
 //nearby_edges_as_vectors also here
 function find_tiles_w_that_vertice(vertice, sometiles) {
     nearby_tiles = [];
 
+
     nearby_edges_as_vectors = [];
     nearby_vert = [];
-    var epsilon = 0.001;
+    var epsilon = 0.0001;
     var count = 0;
     edges_count = 0;
 
@@ -967,6 +1269,7 @@ function find_tiles_w_that_vertice(vertice, sometiles) {
 
     // (vertice.y - sometiles[i].vert[j].y <= epsilon)
     for (var i = 0; i < sometiles.length; i++) {
+        //j -- vertex number
         for (var j = 0; j < 4; j++) {
             if ((Math.abs(vertice.x - sometiles[i].vert[j].x) <= epsilon) &&
                 (Math.abs(vertice.y - sometiles[i].vert[j].y) <= epsilon)) {
@@ -1012,8 +1315,8 @@ function find_tiles_w_that_vertice(vertice, sometiles) {
     //     }
     // }
     // console.log('count = ', count);
-    var myCircle = new Path.Circle(vertice, 7);
-    myCircle.strokeColor = 'green';
+    //  myCircle = new Path.Circle(vertice, 7);
+    // myCircle.strokeColor = 'green';
 
 }
 
@@ -1145,7 +1448,19 @@ function get_unic_vec(vectors) {
                 // console.log(unique_edges_as_vectors[j].vec);
                 // console.log(edge.vec);
                 // console.log(edge.vec - unique_edges_as_vectors[j].vec);
-                return 1;
+
+                if (edge_as_vec.kind == unique_edges_as_vectors[j].kind) {
+
+                    return 1;
+
+                    //
+                } else {
+                    // console.log('place2 arrows mismatch');
+                    // console.log('mismatch', edge_as_vec.kind);
+                    // console.log('mismatch', unique_edges_as_vectors[j].kind);
+                }
+
+                // return 1;
             }
 
         }
@@ -1192,8 +1507,8 @@ function plot_pattern(vectors, x, y) {
     // console.log(center);
 
 
-// single arrow - red
-// double arrow - blue
+    // single arrow - red
+    // double arrow - blue
     for (var i = 0; i < vectors.length; i++) {
         pattern_plot[i] = new Path(center, center + vectors[i]);
 
@@ -1211,7 +1526,7 @@ function plot_pattern(vectors, x, y) {
             pattern_plot[i].strokeColor = 'Tomato 	';
         }
 
-				if (vectors[i].kind == 'double_outward_arrow') {
+        if (vectors[i].kind == 'double_outward_arrow') {
             pattern_plot[i].strokeColor = 'DarkBlue';
         }
 
@@ -1290,7 +1605,7 @@ function reverse_vec(vector) {
     }
 }
 
-//
+// FIXME: bad name
 // ==========================================================================================================
 // =    ==      ======    =        ========  ====  =======  =========    ===  ====  ====  =        =       ==
 // ==  ==  ====  ======  =====  ==========    ===  =======  ========  ==  ==  ====  ====  =  =======  ====  =
@@ -1306,9 +1621,10 @@ function reverse_vec(vector) {
 
 //получаем сет вектором и смотрим включен ли он в допустимые
 function is_it_allowed(vec) {
+
     vec_temp = [];
-    console.log('#############################>>>>>>>>>  IS IT ALLOWED AARHH? <<<<<<<<################################');
-    console.log('vec0 check', vec[0].kind);
+    // console.log('#############################>>>>>>>>>  IS IT ALLOWED AARHH? <<<<<<<<################################');
+    // console.log('vec0 check', vec[0].kind);
     // console.log(allowed_pattern[1]);
     // console.log(vec);
     // console.log('arrows:');
@@ -1330,11 +1646,11 @@ function is_it_allowed(vec) {
             // console.log('yo',vec[0].kind); //стрелки переносит, нормик
             // console.log(vec_temp[0].kind);
             if (patterns_are_equal(vec_temp, i)) {
-                console.log('ALLOWED, patter num', i);
-                console.log('rotation num', j);
+                // console.log('ALLOWED, patter num', i);
+                // console.log('rotation num', j);
 
-								plot_pattern(vec_temp,1.7,1.3);
-								plot_pattern(allowed_pattern[i], 1.9, 1.3);
+                // plot_pattern(vec_temp, 1.7, 1.3);
+                // plot_pattern(allowed_pattern[i], 1.9, 1.3);
 
 
 
@@ -1345,8 +1661,8 @@ function is_it_allowed(vec) {
         }
     }
 
-    console.log('NOT ALLOWED');
-    console.log('is it allowed has ended');
+    // console.log('NOT ALLOWED');
+    // console.log('is it allowed has ended');
     return 0;
 }
 
@@ -1388,16 +1704,16 @@ function patterns_are_equal(vec, n) {
             // console.log(vec[i].kind);
             // console.log(allowed_pattern[n][j].kind);
             if (
-							(vectors_are_equal(vec[i], allowed_pattern[n][j]))&&
-							(vec[i].kind == allowed_pattern[n][j].kind)
+                (vectors_are_equal(vec[i], allowed_pattern[n][j])) &&
+                (vec[i].kind == allowed_pattern[n][j].kind)
 
 
-					) {
+            ) {
 
-                    count++;
-                    // console.log("count", count);
-                    // console.log(vec[i], allowed_pattern[n][j]);
-                    break;
+                count++;
+                // console.log("count", count);
+                // console.log(vec[i], allowed_pattern[n][j]);
+                break;
 
 
             }
@@ -1560,7 +1876,7 @@ function edges_are_equal(edge1, edge2) {
         (Math.abs(this.x2 - this.a2) < epsilon) &&
         (Math.abs(this.y2 - this.b2) < epsilon)
     ) {
-        console.log('edges_are_equal -- true');
+        // console.log('edges_are_equal -- true');
         return 1;
     }
     if (
@@ -1569,11 +1885,11 @@ function edges_are_equal(edge1, edge2) {
         (Math.abs(this.x2 - this.a1) < epsilon) &&
         (Math.abs(this.y2 - this.b1) < epsilon)
     ) {
-        console.log('edges_are_equal -- true');
+        // console.log('edges_are_equal -- true');
         return 1;
     }
 
-    console.log('edges_are_equal -- false');
+    // console.log('edges_are_equal -- false');
     return 0;
 
 }
@@ -1626,6 +1942,140 @@ function remove_marks() {
 function remove_all_marks() {
 
 }
+//
+// ================================================================================================================================
+// =    ==      =========  ====  =======  =========    ===  ====  ====  =        =       ======  ====  =        =       ==        =
+// ==  ==  ====  =======    ===  =======  ========  ==  ==  ====  ====  =  =======  ====  =====  ====  =  =======  ====  ====  ====
+// ==  ==  ====  ======  ==  ==  =======  =======  ====  =  ====  ====  =  =======  ====  =====  ====  =  =======  ====  ====  ====
+// ==  ===  ==========  ====  =  =======  =======  ====  =  ====  ====  =  =======  ====  =====  ====  =  =======  ===   ====  ====
+// ==  =====  ========  ====  =  =======  =======  ====  =   ==    ==  ==      ===  ====  =====   ==   =      ===      ======  ====
+// ==  =======  ======        =  =======  =======  ====  ==  ==    ==  ==  =======  ====  ======  ==  ==  =======  ====  ====  ====
+// ==  ==  ====  =====  ====  =  =======  =======  ====  ==  ==    ==  ==  =======  ====  ======  ==  ==  =======  ====  ====  ====
+// ==  ==  ====  =====  ====  =  =======  ========  ==  ====    ==    ===  =======  ====  =======    ===  =======  ====  ====  ====
+// =    ==      ======  ====  =        =        ===    ======  ====  ====        =       =========  ====        =  ====  ====  ====
+// ================================================================================================================================
+//is it allowed vertex type in a given set of tiles
+//VERT is a point from paper_js
+function is_allowed_vert(vert, tiles) {
+
+    find_tiles_w_that_vertice(vert, tiles);
+    get_unic_vec(nearby_edges_as_vectors); //убрали лишние
+
+
+
+    if (is_it_allowed(unique_edges_as_vectors)) {
+        // console.log('is it allowed vert - true');
+        return 1;
+
+    } else {
+        // console.log('is it allowed vert - false');
+        return 0;
+    }
+}
+
+//
+// ==================================================================================
+// =    ==      ========    ===  ====  =        =       ==  ==========  ====       ==
+// ==  ==  ====  ======  ==  ==  ====  =  =======  ====  =  =========    ===  ====  =
+// ==  ==  ====  =====  ====  =  ====  =  =======  ====  =  ========  ==  ==  ====  =
+// ==  ===  ==========  ====  =  ====  =  =======  ===   =  =======  ====  =  ====  =
+// ==  =====  ========  ====  =   ==   =      ===      ===  =======  ====  =       ==
+// ==  =======  ======  ====  ==  ==  ==  =======  ====  =  =======        =  =======
+// ==  ==  ====  =====  ====  ==  ==  ==  =======  ====  =  =======  ====  =  =======
+// ==  ==  ====  ======  ==  ====    ===  =======  ====  =  =======  ====  =  =======
+// =    ==      ========    ======  ====        =  ====  =        =  ====  =  =======
+// ==================================================================================
+
+// check if given tile overlap with others
+function is_overlap(tile, tiles) {
+
+
+    for (var k = 0; k < 4; k++) {
+        for (var i = 0; i < tiles.length - 1; i++) {
+            for (var j = 0; j < 4; j++) {
+                // this.crossings = tile.edge[k].getCrossings(tiles[i].edge[j]);
+                this.crossings = tile.edge[k].getIntersections(tiles[i].edge[j]);
+                // this.crossings = tiles[i].edge[j].getCrossings(tile.edge[k]);
+
+                var temp = 0;
+                if (this.crossings.length !== 0) {
+
+                    // console.log('cross', this.crossings);
+
+                    // for (var l = 0; l < this.crossings.length; l++) {
+                    //   var test =  new Path.Circle({
+                    //         center: this.crossings[l].point,
+                    //         radius: 5,
+                    //         fillColor: '#009dec'
+                    //
+                    //     });
+                    // 		// console.log('cross point', this.crossings[l].point);
+                    //
+                    // }
+
+                    for (var l = 0; l < this.crossings.length; l++) {
+
+
+                        // console.log('ooover', this.crossings[l].time);
+                        // if ((this.crossings[l].time > 0.00001) && (this.crossings[l].time < 0.99999)) {
+                        if (
+                            // (vectors_are_equal(this.crossings[l].point, tile.vert[0]) === 0) &&
+                            // (vectors_are_equal(this.crossings[l].point, tile.vert[1]) === 0) &&
+                            // (vectors_are_equal(this.crossings[l].point, tile.vert[2]) === 0) &&
+                            // (vectors_are_equal(this.crossings[l].point, tile.vert[3]) === 0) &&
+                            (vectors_are_equal(this.crossings[l].point, tiles[i].vert[0]) === 0) &&
+                            (vectors_are_equal(this.crossings[l].point, tiles[i].vert[1]) === 0) &&
+                            (vectors_are_equal(this.crossings[l].point, tiles[i].vert[2]) === 0) &&
+                            (vectors_are_equal(this.crossings[l].point, tiles[i].vert[3]) === 0)
+                        ) {
+                            // console.log('cross', this.crossings);
+                            // console.log('cross point', this.crossings[l].point);
+                            // console.log(tile.vert[0], vectors_are_equal(this.crossings[l].point, tile.vert[0]));
+                            // console.log(tile.vert[1], vectors_are_equal(this.crossings[l].point, tile.vert[1]));
+                            // console.log(tile.vert[2], vectors_are_equal(this.crossings[l].point, tile.vert[2]));
+                            // console.log(tile.vert[3], vectors_are_equal(this.crossings[l].point, tile.vert[3]));
+                            // new Path.Circle({
+                            //     center: this.crossings[l].point,
+                            //     radius: 5,
+                            //     fillColor: '#009dec'
+                            //
+                            // });
+                            temp++;
+                            return 1;
+
+
+                        }
+                    }
+
+                    // if (temp > 0) {
+                    // console.log('OVERLAP');
+
+
+                    // for (var l = 0; l < this.crossings.length; l++) {
+                    // 		new Path.Circle({
+                    // 				center: this.crossings[l].point,
+                    // 				radius: 5,
+                    // 				fillColor: '#009dec'
+                    //
+                    // 		});
+                    // }
+                    // return 1;
+                    // }
+
+                }
+
+
+
+            }
+        }
+    }
+    return 0;
+    // return 0;
+
+
+
+}
+
 
 
 // =====================================================================
@@ -1645,9 +2095,9 @@ Allowed_Pattens();
 // plot_pattern(allowed_pattern[allowed_pattern.length - 1], 0.2, 0.2);
 // plot_pattern(allowed_pattern[1], 1.2, 0.5);
 
-for (var i = 0; i < allowed_pattern.length; i++) {
-	plot_pattern(allowed_pattern[i], 0.1 + i*0.2, 0.2);
-}
+// for (var i = 0; i < allowed_pattern.length; i++) {
+//     plot_pattern(allowed_pattern[i], 0.1 + i * 0.2, 0.2);
+// }
 
 
 
@@ -1668,21 +2118,99 @@ var outer_edges = [];
 // a_tiles.push(new place_fat_by_edge(a_tiles[6], 3));
 
 
+//decapod
+//
+// b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+// b_tiles.push(new place_fat_by_edge(b_tiles[0], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[0], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[2], 0));
+// b_tiles[1].edge[2].outer = true;
+// b_tiles[1].edge[3].outer = true;
+// b_tiles[2].edge[1].outer = true;
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 0));
+// b_tiles[b_tiles.length-3].edge[2].outer = true;
+// b_tiles[b_tiles.length-3].edge[3].outer = true;
+// b_tiles[b_tiles.length-2].edge[1].outer = true;
+//
+// b_tiles.push(new place_fat_by_edge(b_tiles[b_tiles.length-1], 3));
+// b_tiles.push(new place_thin_by_edge(b_tiles[b_tiles.length-2], 2));
+// b_tiles[b_tiles.length-2].edge[2].outer = true;
+// b_tiles[b_tiles.length-2].edge[3].outer = true;
+// b_tiles[b_tiles.length-1].edge[1].outer = true;
+//
 
 
-b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
-b_tiles[0].edge[0].outer = true;
-b_tiles[0].edge[2].outer = true;
-b_tiles[0].edge[3].outer = true;
-b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
-b_tiles[1].edge[0].outer = true;
-b_tiles[1].edge[3].outer = true;
-b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
-b_tiles[2].edge[0].outer = true;
-b_tiles[2].edge[1].outer = true;
-b_tiles[2].edge[3].outer = true;
 
-// b_tiles.push(new place_thin_by_edge(b_tiles[2], 1));
+
+//gggg
+
+// b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
+// b_tiles[0].edge[0].outer = true;
+// b_tiles[0].edge[2].outer = true;
+// b_tiles[0].edge[3].outer = true;
+// b_tiles.push(new place_fat_by_edge(b_tiles[0], 1));
+// b_tiles[1].edge[0].outer = true;
+// b_tiles[1].edge[3].outer = true;
+// b_tiles.push(new place_thin_by_edge(b_tiles[1], 1));
+// b_tiles[2].edge[0].outer = true;
+// b_tiles[2].edge[1].outer = true;
+// b_tiles[2].edge[3].outer = true;
+
+// b_tiles.push(new place_thin_by_edge(b_tiles[1], 2));
+
+
+// is_overlap(b_tiles[3], b_tiles);
 
 
 // c_tiles[0] = new Thin_Tile(paper.view.center.x * 1, paper.view.center.y * 1.5, 0);
@@ -1692,31 +2220,28 @@ b_tiles[2].edge[3].outer = true;
 // #############################################################################################################
 // #############################################################################################################
 // #############################################################################################################
-function is_it_forced(edge, tiles) {
-    find_tiles_w_that_vertice(edge.firstSegment.point, b_tiles);
-    get_unic_vec(nearby_edges_as_vectors);
-    plot_pattern(unique_edges_as_vectors, 0.2, 1.5);
-    if (is_it_allowed(unique_edges_as_vectors)) {
-        return -666;
-
-    } else {
-        pop_tile(tiles);
-    }
-
-    return -666;
-}
+// function is_it_forced(edge, tiles) {
+//     find_tiles_w_that_vertice(edge.firstSegment.point, b_tiles);
+//     get_unic_vec(nearby_edges_as_vectors);
+//     plot_pattern(unique_edges_as_vectors, 0.2, 1.5);
+//     if (is_it_allowed(unique_edges_as_vectors)) {
+//         return -666;
+//
+//     } else {
+//         pop_tile(tiles);
+//     }
+//
+//     return -666;
+// }
 // #############################################################################################################
 // #############################################################################################################
 // #############################################################################################################
-get_outer_edges(b_tiles);
-console.log("outer_edges", outer_edges);
 
 
 
 // find_tiles_w_that_vertice(a_tiles[0].vert[2], a_tiles);
 // find_tiles_w_that_vertice(b_tiles[0].vert[2], b_tiles);
 
-get_outer_edges(b_tiles);
 
 
 
@@ -1783,8 +2308,7 @@ temp = Math.floor((Math.random() * outer_edges.length));
 
 
 
-b_tiles.push(new place_fat_by_edge(b_tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
-
+// b_tiles.push(new place_fat_by_edge(b_tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
 
 
 remove_marks();
@@ -1793,43 +2317,37 @@ remove_marks();
 // find_tiles_w_that_vertice(b_tiles[outer_edges[temp].tilenum].edge[outer_edges[temp].edgenum].lastSegment.point, b_tiles);
 // find_tiles_w_that_vertice(b_tiles[outer_edges[temp].tilenum].edge[outer_edges[temp].edgenum].firstSegment.point, b_tiles);
 
-find_tiles_w_that_vertice(outer_edges[temp].firstSegment.point, b_tiles);
+// find_tiles_w_that_vertice(outer_edges[temp].firstSegment.point, b_tiles);
 
 // find_tiles_w_that_vertice(outer_edges[temp].lastSegment.point, b_tiles); //получили nearby_edges_as_vectors
-get_unic_vec(nearby_edges_as_vectors); //убрали лишние
-console.log('unic kind chech', unique_edges_as_vectors[0].kind);
-plot_pattern(unique_edges_as_vectors, 0.2, 1.5); //нарисовали
+// get_unic_vec(nearby_edges_as_vectors); //убрали лишние
+// console.log('unic kind chech', unique_edges_as_vectors[0].kind);
+// plot_pattern(unique_edges_as_vectors, 0.2, 1.5); //нарисовали
 
-if (is_it_allowed(unique_edges_as_vectors)) {
+// var outer_edge_num = add_random_tile(b_tiles);
 
-
-    // var last = 1;
-
-
-    var text = new PointText(new Point(500, 50));
-    text.justification = 'center';
-    text.fillColor = 'black';
-    text.content = 'allowed';
-    text.fontSize = '20';
-
-
-} else {
-    // pop_tile(b_tiles);
-    var text = new PointText(new Point(450, 50));
-    text.justification = 'center';
-    text.fillColor = 'black';
-    text.content = 'not allowed';
-		text.fontSize = '20';
-
-}
-
-
-
-
-update_outer_propery_4_new_tile(b_tiles[b_tiles.length - 1], outer_edges);
-get_outer_edges(b_tiles);
-mark_edges(outer_edges);
-
+//
+// if (is_allowed_vert(outer_edges[temp].firstSegment.point, b_tiles)) {
+//     var text2 = new PointText(new Point(500, 150));
+//     text2.justification = 'center';
+//     text2.fillColor = 'GREY';
+//     text2.content = 'allowed VERT';
+//     text2.fontSize = '20';
+//     console.log('ALLOWED VERT');
+// } else {
+//     console.log('NOT ALLOWED VERT');
+//     var text2 = new PointText(new Point(500, 150));
+//     text2.justification = 'center';
+//     text2.fillColor = 'GREY';
+//     text2.content = 'NOT allowed VERT ';
+//     text2.fontSize = '20';
+// }
+//
+//
+// update_outer_propery_4_new_tile(b_tiles[b_tiles.length - 1], outer_edges);
+// get_outer_edges(b_tiles);
+// mark_edges(outer_edges);
+//
 
 
 
