@@ -230,7 +230,7 @@ function onKeyDown(event) {
 function controls() {
   controls1 = new PointText({
     point: [0.1 * view.center.x, 0.1 * view.center.y],
-    content: '´v´ - one step, ´b´ - 50 steps, ´n´ - 100 steps ',
+    content: '´v´ - one step, ´b´ - 50 steps, ´n´ - 100 steps (forced tiles only) ',
     fillColor: 'black',
     fontFamily: 'Courier New',
     fontWeight: 'bold',
@@ -293,20 +293,23 @@ function add_random_tile(tiles) {
   temp = Math.floor((Math.random() * 2)); //randomly choose tile type
   var i = 0;
 
-  console.log(temp);
+  // console.log(temp);
 
   if (temp == 1) {
 
     temp = Math.floor((Math.random() * outer_edges.length));
-    console.log('fat chosen');
+    // console.log('fat chosen');
     tiles.push(new place_fat_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
     // tiles.push(new place_fat_by_edge(tiles[1], 3));
 
     if (
       (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
-      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
-      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
-      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+      (is_overlap(tiles[tiles.length - 1], tiles) === 0) &&
+      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))
+      // (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+      // (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+      // (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+      // (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
 
     ) {
 
@@ -323,16 +326,19 @@ function add_random_tile(tiles) {
   } else {
 
     temp = Math.floor((Math.random() * outer_edges.length));
-    console.log('thin chosen');
+    // console.log('thin chosen');
     tiles.push(new place_thin_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
 
 
 
     if (
       (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
-      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
-      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
-      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+      (is_overlap(tiles[tiles.length - 1], tiles) === 0) &&
+      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))
+      // (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+      // (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+      // (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+      // (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
 
     ) {
 
@@ -352,7 +358,7 @@ function add_random_tile(tiles) {
 
     (is_overlap(tiles[tiles.length - 1], tiles) === 0)
   ) {
-    console.log('ooverlap');
+    // console.log('ooverlap');
   }
 
 }
@@ -369,7 +375,7 @@ edge = new Path([0, 0]);
 //FIXME: bad name
 function add_random_tile_2(tiles) {
 
-  console.log('>>>>>>add rand 2 ...');
+  // console.log('>>>>>>add rand 2 ...');
   edge.strokeColor = 'black';
   edge.strokeWidth = '2';
   // edge.remove();
@@ -393,11 +399,11 @@ function add_random_tile_2(tiles) {
     // (is_overlap(tiles[tiles.length - 1], tiles) === 0)
   ) {
     this.fat = 1;
-    console.log('fat is good');
+    // console.log('fat is good');
     pop_tile(tiles);
 
   } else {
-    console.log('fat was bad, so thin is good');
+    // console.log('fat was bad, so thin is good');
 
     pop_tile(tiles);
     tiles.push(new place_thin_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
@@ -433,7 +439,7 @@ function add_random_tile_2(tiles) {
 
     this.thin = 1;
 
-    console.log('thin is good');
+    // console.log('thin is good');
 
     pop_tile(tiles);
 
@@ -471,7 +477,7 @@ function add_random_tile_2(tiles) {
 
   if ((this.thin === 1) && (this.fat === 1)) {
     // plot_pattern(unique_edges_as_vectors, 1.7, 1.3);
-    console.log('place2 ...');
+    // console.log('place2 ...');
   }
 
   edge = outer_edges[temp];
@@ -2492,4 +2498,4 @@ remove_marks();
 // #############################################################################################################
 
 
-console.log('end');
+console.log('up up down down aa b c ');
