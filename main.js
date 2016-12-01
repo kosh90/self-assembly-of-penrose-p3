@@ -6,6 +6,34 @@ var j = 0;
 var epsilon = 0.001;
 var show_decor = 1;
 
+
+var tut_pick_seed = new PointText({
+  point: [view.center.x, view.center.y],
+  content: 'Press ´1´ for decapod, ´2´ for basic seed ',
+  fillColor: 'black',
+  fontFamily: 'Courier New',
+  fontWeight: 'bold',
+  fontSize: 25,
+  justification: 'center'
+});
+
+
+
+
+
+// =============================================================================================
+// ===     =====    ====  =======  ===      ===        ==       =====    ====  =========      ==
+// ==  ===  ===  ==  ===   ======  ==  ====  =====  =====  ====  ===  ==  ===  ========  ====  =
+// =  ========  ====  ==    =====  ==  ====  =====  =====  ====  ==  ====  ==  ========  ====  =
+// =  ========  ====  ==  ==  ===  ===  ==========  =====  ===   ==  ====  ==  =========  ======
+// =  ========  ====  ==  ===  ==  =====  ========  =====      ====  ====  ==  ===========  ====
+// =  ========  ====  ==  ====  =  =======  ======  =====  ====  ==  ====  ==  =============  ==
+// =  ========  ====  ==  =====    ==  ====  =====  =====  ====  ==  ====  ==  ========  ====  =
+// ==  ===  ===  ==  ===  ======   ==  ====  =====  =====  ====  ===  ==  ===  ========  ====  =
+// ===     =====    ====  =======  ===      ======  =====  ====  ====    ====        ===      ==
+// =============================================================================================
+
+
 function onKeyDown(event) {
   if (event.key == 'up') {
     view.translate([0, 50]);
@@ -30,6 +58,13 @@ function onKeyDown(event) {
     remove_all_marks();
   }
   if (event.key == 'h') {
+    // controls1.strokeColor = 'red';
+    controls1.visible = !controls1.visible;
+    controls2.visible = !controls2.visible;
+    controls3.visible = !controls3.visible;
+
+  }
+  if (event.key == 'j') {
     remove_all_marks();
     for (var i = 0; i < b_tiles.length; i++) {
       b_tiles[i].decoration_red.visible = false;
@@ -62,6 +97,8 @@ function onKeyDown(event) {
   }
 
   if (event.key == '1') {
+    controls();
+    tut_pick_seed.remove();
     b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
     b_tiles.push(new place_fat_by_edge(b_tiles[0], 3));
     b_tiles.push(new place_thin_by_edge(b_tiles[0], 2));
@@ -138,6 +175,8 @@ function onKeyDown(event) {
   }
 
   if (event.key == '2') {
+    controls();
+    tut_pick_seed.remove();
     b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
     b_tiles[0].edge[0].outer = true;
     b_tiles[0].edge[2].outer = true;
@@ -155,6 +194,8 @@ function onKeyDown(event) {
   }
 
   if (event.key == '3') {
+    controls();
+    tut_pick_seed.remove();
     b_tiles[0] = new Fat_Tile(paper.view.center.x, paper.view.center.y, 0);
     b_tiles.push(new place_fat_by_edge(b_tiles[0], 3));
     b_tiles.push(new place_thin_by_edge(b_tiles[0], 2));
@@ -173,6 +214,78 @@ function onKeyDown(event) {
   }
 }
 
+// ==================================================================================================================
+// ==      ===  ====  ====    ====  ====  ====  =========     ===  =======  ==        ==       ===  =========      ==
+// =  ====  ==  ====  ===  ==  ===  ====  ====  ========  ===  ==   ======  =====  =====  ====  ==  ========  ====  =
+// =  ====  ==  ====  ==  ====  ==  ====  ====  =======  ========    =====  =====  =====  ====  ==  ========  ====  =
+// ==  =======  ====  ==  ====  ==  ====  ====  =======  ========  ==  ===  =====  =====  ===   ==  =========  ======
+// ====  =====        ==  ====  ==   ==    ==  ========  ========  ===  ==  =====  =====      ====  ===========  ====
+// ======  ===  ====  ==  ====  ===  ==    ==  ========  ========  ====  =  =====  =====  ====  ==  =============  ==
+// =  ====  ==  ====  ==  ====  ===  ==    ==  ========  ========  =====    =====  =====  ====  ==  ========  ====  =
+// =  ====  ==  ====  ===  ==  =====    ==    ==========  ===  ==  ======   =====  =====  ====  ==  ========  ====  =
+// ==      ===  ====  ====    =======  ====  ============     ===  =======  =====  =====  ====  ==        ===      ==
+// ==================================================================================================================
+
+
+function controls() {
+  controls1 = new PointText({
+    point: [0.1 * view.center.x, 0.1 * view.center.y],
+    content: '´v´ - one step, ´b´ - 50 steps, ´n´ - 100 steps ',
+    fillColor: 'black',
+    fontFamily: 'Courier New',
+    fontWeight: 'bold',
+    fontSize: 20,
+    justification: 'left',
+    visible: true
+  });
+
+  controls2 = new PointText({
+    point: [0.1 * view.center.x, 0.15 * view.center.y],
+    content: ' press ´a´ to place random tile at random place (may overlap) ',
+    fillColor: 'black',
+    fontFamily: 'Courier New',
+    fontWeight: 'bold',
+    fontSize: 20,
+    justification: 'left',
+    visible: true
+  });
+
+  controls3 = new PointText({
+    point: [0.1 * view.center.x, 0.2 * view.center.y],
+    content: ' arrows to move view, ´h´ to hide contols',
+    fillColor: 'black',
+    fontFamily: 'Courier New',
+    fontWeight: 'bold',
+    fontSize: 20,
+    justification: 'left',
+    visible: true
+  });
+
+  this.toggle = function() {
+      // this.contols1.visible = !this.contols1.visible;
+      controls1.visible = false;
+      controls1.strokeColor = 'blue';
+      controls1.remove();
+      contols();
+      // this.c
+    }
+    // controls1.strokeColor = 'blue';
+
+}
+
+//
+// ===========================================================================================
+// =       ===  ===========  =======     ===        =======        ==    ==  ========        =
+// =  ====  ==  ==========    =====  ===  ==  ================  ======  ===  ========  =======
+// =  ====  ==  =========  ==  ===  ========  ================  ======  ===  ========  =======
+// =  ====  ==  ========  ====  ==  ========  ================  ======  ===  ========  =======
+// =       ===  ========  ====  ==  ========      ============  ======  ===  ========      ===
+// =  ========  ========        ==  ========  ================  ======  ===  ========  =======
+// =  ========  ========  ====  ==  ========  ================  ======  ===  ========  =======
+// =  ========  ========  ====  ===  ===  ==  ================  ======  ===  ========  =======
+// =  ========        ==  ====  ====     ===        ==========  =====    ==        ==        =
+// ===========================================================================================
+
 //add random tile to the given set of tiles
 //return number of chosen outer edge
 function add_random_tile(tiles) {
@@ -189,7 +302,13 @@ function add_random_tile(tiles) {
     tiles.push(new place_fat_by_edge(tiles[outer_edges[temp].tilenum], outer_edges[temp].edgenum));
     // tiles.push(new place_fat_by_edge(tiles[1], 3));
 
-    if ((is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) && (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))) {
+    if (
+      (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+
+    ) {
 
 
 
@@ -209,7 +328,13 @@ function add_random_tile(tiles) {
 
 
 
-    if ((is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) && (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles))) {
+    if (
+      (is_allowed_vert(outer_edges[temp].firstSegment.point, tiles)) &&
+      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0) &&
+      (is_allowed_vert(outer_edges[temp].lastSegment.point, tiles)) &&
+      (is_overlap(tiles[tiles.length - 1], nearby_tiles) === 0)
+
+    ) {
 
 
 
@@ -224,7 +349,6 @@ function add_random_tile(tiles) {
   }
 
   if (
-
 
     (is_overlap(tiles[tiles.length - 1], tiles) === 0)
   ) {
@@ -242,7 +366,7 @@ edge = new Path([0, 0]);
 //################################################################################################
 //################################################################################################
 //################################################################################################
-
+//FIXME: bad name
 function add_random_tile_2(tiles) {
 
   console.log('>>>>>>add rand 2 ...');
