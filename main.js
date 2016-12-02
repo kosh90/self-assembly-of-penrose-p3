@@ -64,12 +64,20 @@ function onKeyDown(event) {
     controls3.visible = !controls3.visible;
 
   }
+  if (event.key == 'p') {
+    remove_all_marks();
+    for (var i = 0; i < b_tiles.length; i++) {
+      b_tiles[i].decoration_red.visible = !b_tiles[i].decoration_red.visible;
+      // b_tiles[i].decoration_red.strokeColor = 'green';
+      b_tiles[i].decoration_blue.visible = !b_tiles[i].decoration_red.visible;
+    }
+  }
   if (event.key == 'j') {
     remove_all_marks();
     for (var i = 0; i < b_tiles.length; i++) {
-      b_tiles[i].decoration_red.visible = false;
+      b_tiles[i].decoration_red.visible = !b_tiles[i].decoration_red.visible;
       // b_tiles[i].decoration_red.strokeColor = 'green';
-      b_tiles[i].decoration_blue.visible = false;
+      b_tiles[i].decoration_blue.visible = !b_tiles[i].decoration_blue.visible;
     }
   }
   if (event.key == 'm') {
@@ -268,7 +276,7 @@ function controls() {
       controls1.remove();
       contols();
       // this.c
-    }
+    };
     // controls1.strokeColor = 'blue';
 
 }
